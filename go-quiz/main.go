@@ -6,11 +6,13 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 )
 
 func main() {
 	//Make a csv flag to give manual csv file, then parse it.
 	csvFlagName := flag.String("csv", "problems.csv", "a csv file in the format of 'question,answer'")
+	timeLimit := flag.Int("limit", 2, "Time limit in seconds")
 	flag.Parse()
 
 	file, err := os.Open(*csvFlagName)
@@ -23,16 +25,23 @@ func main() {
 		log.Fatalf("Error while reading file :%s", err)
 	}
 	problems := parseFile(lines)
-	fmt.Println(problems)
 
+	timer := time.NewTimer(time.Duration(*timeLimit) * time.Second)
 	correct := 0
 	for i, p := range problems {
-		fmt.Printf("Problem #%d: %s =", i+1, p.q)
-		var answer string
-		fmt.Scanf("%s\n", &answer)
-		if answer == p.a {
-			correct++
+		select {
+		case <-timer.C:
+			fmt.Printf("\nYou have scored %d out of %d", correct, len(problems))
+			return
+		default:
+			fmt.Printf("Problem #%d: %s =", i+1, p.q)
+			var answer string
+			fmt.Scanf("%s\n", &answer)
+			if answer == p.a {
+				correct++
+			}
 		}
+
 	}
 	fmt.Printf("You have scored %d out of %d", correct, len(problems))
 }
