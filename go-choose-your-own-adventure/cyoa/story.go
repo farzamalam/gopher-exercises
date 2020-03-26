@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"html/template"
 	"io"
+	"log"
 	"net/http"
 )
 
@@ -45,10 +46,21 @@ type handler struct {
 }
 
 func (h handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	err := tpl.Execute(w, h.s["intro"])
-	if err != nil {
-		panic(err)
+	path := r.URL.Path
+	if path == "" || path == "/" {
+		path = "/intro"
 	}
+	path = path[1:]
+
+	if chapter, ok := h.s[path]; ok {
+		err := tpl.Execute(w, chapter)
+		if err != nil {
+			log.Printf("%v\n", err)
+			http.Error(w, "Error while Executing the template", http.StatusInternalServerError)
+		}
+		return
+	}
+	http.Error(w, "Path not found", http.StatusNotFound)
 }
 
 var defaultTemplate = `<!DOCTYPE html>
