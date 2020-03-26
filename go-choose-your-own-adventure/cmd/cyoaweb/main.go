@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
+	"net/http"
 	"os"
 
 	"github.com/farzamalam/gopher-exercises/go-choose-your-own-adventure/cyoa"
@@ -10,6 +12,7 @@ import (
 
 func main() {
 	fileName := flag.String("file", "gopher.json", "the JSON file with cyoa story")
+	port := flag.Int("port", 3000, "The port to run our application on.")
 	flag.Parse()
 	fmt.Println("fileName : ", *fileName)
 
@@ -23,5 +26,8 @@ func main() {
 		fmt.Println("Error while decoding file : ", err)
 		os.Exit(1)
 	}
-	fmt.Printf("%+v\n", story)
+	fmt.Printf("Server has started on port :%d\n", *port)
+	h := cyoa.NewHandler(story)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", *port), h))
+	//fmt.Printf("%+v\n", story)
 }
