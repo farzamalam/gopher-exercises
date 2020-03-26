@@ -10,6 +10,10 @@ import (
 	"github.com/farzamalam/gopher-exercises/go-choose-your-own-adventure/cyoa"
 )
 
+// main is used to first intialize the flags then opens up the json file
+// then decodes the json file into story type.
+// Default handler is h, it can be called with argument story or with story and cyoa.WithTemplate to have
+// custom template
 func main() {
 	fileName := flag.String("file", "gopher.json", "the JSON file with cyoa story")
 	port := flag.Int("port", 3000, "The port to run our application on.")

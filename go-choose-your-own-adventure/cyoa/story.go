@@ -8,19 +8,23 @@ import (
 	"net/http"
 )
 
+// Chapter type has three field ie. Title, Paragraphs of []string type and Options of []Option Type.
 type Chapter struct {
 	Title      string   `json:"title"`
 	Paragraphs []string `json:"story"`
 	Options    []Option `json:"options"`
 }
 
+// Option type is used for the option used for the navigation purpose. It is used in the bottom of our application.
 type Option struct {
 	Text    string `json:"text"`
 	Chapter string `json:"arc"`
 }
 
+// It is map of path-name and Chapter. We are parsing our json file into this Story map.
 type Story map[string]Chapter
 
+// JsonDecode is used to decode the json file of type io.Reader into Story map. It is called from the main()
 func JsonDecode(r io.Reader) (Story, error) {
 	d := json.NewDecoder(r)
 	var story Story
@@ -33,6 +37,7 @@ func JsonDecode(r io.Reader) (Story, error) {
 
 var tpl *template.Template
 
+// default template is initialized at the load of the program.
 func init() {
 	tpl = template.Must(template.New("").Parse(defaultTemplate))
 }
@@ -50,6 +55,7 @@ func WithTemplate(t *template.Template) HandlerOption {
 	}
 }
 
+// NewHandler types story and optional HandlerOptions, basis that it serves the template and story.
 func NewHandler(s Story, opts ...HandlerOption) http.Handler {
 	h := handler{s, tpl}
 	for _, opt := range opts {
@@ -63,6 +69,8 @@ type handler struct {
 	t *template.Template
 }
 
+// ServeHTTP method on h handler is used to find the url path, and then check the same path in the story map,
+// if finds it then it serves the chapter. Otherwise returns a NotFoundErr.
 func (h handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	path := r.URL.Path
@@ -82,6 +90,7 @@ func (h handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "Path not found", http.StatusNotFound)
 }
 
+// defaultTemplate is the html-css template that is rendered for our web application.
 var defaultTemplate = `<!DOCTYPE html>
 			<html>
 				<head>
