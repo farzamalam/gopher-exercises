@@ -3,6 +3,7 @@ package links
 import (
 	"fmt"
 	"io"
+	"strings"
 
 	"golang.org/x/net/html"
 )
@@ -25,6 +26,21 @@ func Parse(r io.Reader) ([]Link, error) {
 	return links, nil
 }
 
+func text(n *html.Node) string {
+	if n.Type == html.TextNode {
+		return n.Data
+	}
+	if n.Type != html.ElementNode {
+		return ""
+	}
+	var txt string
+
+	for c := n.FirstChild; c != nil; c = c.NextSibling {
+		txt += text(c) + " "
+	}
+	return strings.Join(strings.Fields(txt), " ")
+}
+
 func buildLink(n *html.Node) Link {
 	var link Link
 	for _, attr := range n.Attr {
@@ -33,7 +49,7 @@ func buildLink(n *html.Node) Link {
 			break
 		}
 	}
-	link.Text = "to do"
+	link.Text = text(n)
 	return link
 }
 
