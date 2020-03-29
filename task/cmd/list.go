@@ -8,10 +8,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
+//init is used to add the listCmd var to RootCmd.
+//it runs before main()
 func init() {
 	RootCmd.AddCommand(listCmd)
 }
 
+//listCmd variable contains the task of displaying all the task that are present
+//in the bucket. It calls db.AllTasks() that returns all the tasks, it just prints on
+//the console.
 var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "list is used to print all the tasks.",

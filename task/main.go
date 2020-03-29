@@ -9,6 +9,9 @@ import (
 	"github.com/mitchellh/go-homedir"
 )
 
+// main is used to get the home dir path and initialize task.db their
+// by calling db.Init()
+// then it executes the RootCmd.
 func main() {
 	home, err := homedir.Dir()
 	if err != nil {
@@ -19,5 +22,7 @@ func main() {
 	if err != nil {
 		log.Fatal("Error while Init() db")
 	}
+	// Added a db.Close()
+	defer db.GetDB().Close()
 	cmd.RootCmd.Execute()
 }

@@ -10,6 +10,9 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// addCmd is used to add a new task to the bucket.
+// it takes the task as cmd argument the calls db.CreateTask() with task argument to store the path.
+// then prints a new task added msg.
 var addCmd = &cobra.Command{
 	Use:   "add",
 	Short: "add is used to add new task",
@@ -24,6 +27,8 @@ var addCmd = &cobra.Command{
 	},
 }
 
+// init is used to add the addCmd to RootCmd.
+// it runs before main()
 func init() {
 	RootCmd.AddCommand(addCmd)
 }
