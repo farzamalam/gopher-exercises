@@ -39,10 +39,24 @@ func main() {
 	must(err)
 	defer db.Close()
 	must(createPhoneNumberTable(db))
+
+	id, err := insertPhoneNumber(db, "1234567890")
+	must(err)
+	fmt.Println("id = ", id)
+
+}
+
+func insertPhoneNumber(db *sql.DB, phone string) (int, error) {
+	statement := `
+	INSERT INTO PHONE_NUMBER(value) VALUES($1) RETURNING ID
+	`
+	var id int
+	err := db.QueryRow(statement, phone).Scan(&id)
+	return id, err
 }
 func createPhoneNumberTable(db *sql.DB) error {
 	statement := `
-	CREATE TABLE PHONE_NUMBER (
+	CREATE TABLE IF NOT EXISTS PHONE_NUMBER (
 	ID SERIAL,
 	VALUE VARCHAR(255)
 	)
