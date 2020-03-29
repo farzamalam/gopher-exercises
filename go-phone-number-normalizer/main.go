@@ -43,10 +43,15 @@ func main() {
 	// id, err := insertPhoneNumber(db, "1234567890")
 	// must(err)
 	// fmt.Println("id = ", id)
-	phone, err := getPhone(db, 3)
+	id := 3
+	phone, err := getPhone(db, id)
 	must(err)
 	fmt.Printf("id = %d phone %s\n", id, phone)
-
+	phones, err := allPhones(db)
+	must(err)
+	for _, p := range phones {
+		fmt.Printf("%d = %s\n", p.id, p.number)
+	}
 }
 func getPhone(db *sql.DB, id int) (string, error) {
 	var phone string
@@ -58,6 +63,26 @@ func getPhone(db *sql.DB, id int) (string, error) {
 	return phone, nil
 }
 
+type phone struct {
+	id     int
+	number string
+}
+
+func allPhones(db *sql.DB) ([]phone, error) {
+	var phones []phone
+	rows, err := db.Query("SELECT * FROM PHONE_NUMBER")
+	if err != nil {
+		return nil, err
+	}
+	for rows.Next() {
+		var p phone
+		if err := rows.Scan(&p.id, &p.number); err != nil {
+			return nil, err
+		}
+		phones = append(phones, p)
+	}
+	return phones, nil
+}
 func insertPhoneNumber(db *sql.DB, phone string) (int, error) {
 	statement := `
 	INSERT INTO PHONE_NUMBER(value) VALUES($1) RETURNING ID
