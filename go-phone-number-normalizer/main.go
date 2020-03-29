@@ -40,10 +40,22 @@ func main() {
 	defer db.Close()
 	must(createPhoneNumberTable(db))
 
-	id, err := insertPhoneNumber(db, "1234567890")
+	// id, err := insertPhoneNumber(db, "1234567890")
+	// must(err)
+	// fmt.Println("id = ", id)
+	phone, err := getPhone(db, 3)
 	must(err)
-	fmt.Println("id = ", id)
+	fmt.Printf("id = %d phone %s\n", id, phone)
 
+}
+func getPhone(db *sql.DB, id int) (string, error) {
+	var phone string
+	statement := "SELECT VALUE FROM PHONE_NUMBER WHERE ID = $1"
+	err := db.QueryRow(statement, id).Scan(&phone)
+	if err != nil {
+		return "", err
+	}
+	return phone, nil
 }
 
 func insertPhoneNumber(db *sql.DB, phone string) (int, error) {
