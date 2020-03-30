@@ -51,8 +51,34 @@ func main() {
 	must(err)
 	for _, p := range phones {
 		fmt.Printf("%d = %s\n", p.id, p.number)
+		number := normalize(p.number)
+		if number != p.number {
+			p, err := findPhone(db, number)
+			must(err)
+			if p != nil {
+				fmt.Println("Found and Deleting...", number)
+			} else {
+				fmt.Println("Not found and updating...", number)
+			}
+
+		}
+
 	}
 }
+
+func findPhone(db *sql.DB, number string) (*phone, error) {
+	var p phone
+	statement := "SELECT * FROM PHONE_NUMBER WHERE VALUE = $1"
+	err := db.QueryRow(statement, number).Scan(&p.id, &p.number)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, nil
+		}
+		return nil, err
+	}
+	return &p, nil
+}
+
 func getPhone(db *sql.DB, id int) (string, error) {
 	var phone string
 	statement := "SELECT VALUE FROM PHONE_NUMBER WHERE ID = $1"
