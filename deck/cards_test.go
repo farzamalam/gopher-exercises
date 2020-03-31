@@ -21,7 +21,15 @@ func ExampleCard() {
 
 func TestNew(t *testing.T) {
 	cards := New()
-	if len(cards) != 51 {
+	if len(cards) != 52 {
 		t.Error("Wrong number of cards in the deck")
+	}
+}
+
+func TestDetaultCards(t *testing.T) {
+	cards := New(Sort(Less))
+	exp := Card{Suit: Spade, Rank: Ace}
+	if exp != cards[0] {
+		t.Errorf("Expected %s  and got %s", exp, cards[0])
 	}
 }
