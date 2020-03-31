@@ -33,3 +33,17 @@ func TestDetaultCards(t *testing.T) {
 		t.Errorf("Expected %s  and got %s", exp, cards[0])
 	}
 }
+
+func TestJokers(t *testing.T) {
+	cards := New(Jokers(3))
+	count := 0
+
+	for _, c := range cards {
+		if c.Suit == Joker {
+			count++
+		}
+	}
+	if count != 3 {
+		t.Errorf("Expected 3 got %d", count)
+	}
+}
