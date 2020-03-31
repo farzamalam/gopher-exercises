@@ -2,6 +2,7 @@ package deck
 
 import (
 	"fmt"
+	"math/rand"
 	"testing"
 )
 
@@ -64,5 +65,20 @@ func TestDesk(t *testing.T) {
 	cards := New(Deck((3)))
 	if len(cards) != 13*4*3 {
 		t.Errorf("Expected %d got %d", 13*4*3, len(cards))
+	}
+}
+
+func TestShuffle(t *testing.T) {
+	shuffleRand = rand.New(rand.NewSource(0))
+	orig := New()
+	first := orig[40]
+	second := orig[35]
+
+	cards := New(Shuffle)
+	if cards[0] != first {
+		t.Errorf("Expected %s got %s", first, cards[0])
+	}
+	if cards[1] != second {
+		t.Errorf("Expected %s got %s", second, cards[1])
 	}
 }

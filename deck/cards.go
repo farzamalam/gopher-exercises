@@ -8,8 +8,10 @@ import (
 	"time"
 )
 
+// Suit is uint8 type to represent a suit
 type Suit uint8
 
+// Values are assigned to all the suit constants
 const (
 	Spade Suit = iota
 	Diamond
@@ -20,8 +22,10 @@ const (
 
 var suits = [...]Suit{Spade, Diamond, Club, Heart}
 
+// Rank is uint8 type to represent a rank
 type Rank uint8
 
+// Rank is assigned to all the cards
 const (
 	_ Rank = iota
 	Ace
@@ -43,11 +47,13 @@ const (
 	maxRank = King
 )
 
+// Card resembles one card
 type Card struct {
 	Suit
 	Rank
 }
 
+// String() is used to stringer the Card type
 func (c Card) String() string {
 	if c.Suit == Joker {
 		return c.Suit.String()
@@ -55,6 +61,7 @@ func (c Card) String() string {
 	return fmt.Sprintf("%s of %ss", c.Rank.String(), c.Suit.String())
 }
 
+// New is function to generate a card deck, it uses mulitple functional options.
 func New(opts ...func([]Card) []Card) []Card {
 	var cards []Card
 	for _, suit := range suits {
@@ -68,21 +75,25 @@ func New(opts ...func([]Card) []Card) []Card {
 	return cards
 }
 
+// absRank returns the absolute rank of a card.
 func absRank(c Card) int {
 	return int(c.Suit)*int(minRank) + int(c.Rank)
 }
 
+// Less function is used to sort the cards basis their absolute rank.
 func Less(cards []Card) func(i, j int) bool {
 	return func(i, j int) bool {
 		return absRank(cards[i]) < absRank(cards[j])
 	}
 }
 
+// DefaultSort uses the Less func opt for sorting the deck.
 func DefaultSort(cards []Card) []Card {
 	sort.Slice(cards, Less(cards))
 	return cards
 }
 
+// Sort function takes Less and cards, returns the sorted cards slice using the Less function.
 func Sort(less func(cards []Card) func(i, j int) bool) func([]Card) []Card {
 	return func(cards []Card) []Card {
 		sort.Slice(cards, less(cards))
@@ -90,16 +101,19 @@ func Sort(less func(cards []Card) func(i, j int) bool) func([]Card) []Card {
 	}
 }
 
+var shuffleRand = rand.New(rand.NewSource(time.Now().Unix()))
+
+// Shuffle is used to shuffle the cards in random order.
 func Shuffle(cards []Card) []Card {
 	ret := make([]Card, len(cards))
-	r := rand.New(rand.NewSource(time.Now().Unix()))
-	perm := r.Perm(len(cards))
+	perm := shuffleRand.Perm(len(cards))
 	for i, j := range perm {
 		ret[i] = cards[j]
 	}
 	return ret
 }
 
+// Joker is used to return the Joker card slice.
 func Jokers(n int) func(cards []Card) []Card {
 	return func(cards []Card) []Card {
 		for i := 0; i < n; i++ {
@@ -112,6 +126,7 @@ func Jokers(n int) func(cards []Card) []Card {
 	}
 }
 
+// Filter is used to filter out given cards,.
 func Filter(f func(card Card) bool) func([]Card) []Card {
 	return func(cards []Card) []Card {
 		var ret []Card
@@ -124,6 +139,7 @@ func Filter(f func(card Card) bool) func([]Card) []Card {
 	}
 }
 
+// Deck is used to return multiple deck of cards.
 func Deck(n int) func([]Card) []Card {
 	return func(cards []Card) []Card {
 		var ret []Card
