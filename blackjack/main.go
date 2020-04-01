@@ -7,6 +7,8 @@ import (
 	"github.com/farzamalam/gopher-exercises/deck"
 )
 
+// main func is used to orcastrate all methods and funcs.
+// it initializes and uses same gs across all the funcs.
 func main() {
 	var gs GameState
 	gs = Shuffle(gs)
@@ -42,6 +44,7 @@ func main() {
 	}
 }
 
+// Score is used to return the total score, it factors ACE.
 func (h Hand) Score() int {
 	minScore := h.minScore()
 	if minScore > 11 {
@@ -54,6 +57,8 @@ func (h Hand) Score() int {
 	}
 	return minScore
 }
+
+// minScore calculates the total score by considering ace as 1
 func (h Hand) minScore() int {
 	score := 0
 	for _, c := range h {
@@ -62,19 +67,24 @@ func (h Hand) minScore() int {
 	return score
 }
 
+// min is used to return min of two values
 func min(a, b int) int {
 	if a < b {
 		return a
 	}
 	return b
 }
+
+// draw returns a card and a deck of cards other than removed card.
 func draw(cards []deck.Card) (deck.Card, []deck.Card) {
 	card, cards := cards[0], cards[1:]
 	return card, cards
 }
 
+// Hand type is used to represent a current state of hand.
 type Hand []deck.Card
 
+// It prints the hand with comma seperated string
 func (h Hand) String() string {
 	strs := make([]string, len(h))
 	for i := range h {
@@ -83,12 +93,15 @@ func (h Hand) String() string {
 	return strings.Join(strs, ", ")
 }
 
+// dealerString is used to show only one card of dealer.
 func (h Hand) dealerString() string {
 	return h[0].String() + ", ** Hidden **"
 }
 
+// State represents who has the turn.
 type State uint8
 
+// GameState type represents the current state of a game.
 type GameState struct {
 	Deck   []deck.Card
 	State  State
@@ -96,12 +109,14 @@ type GameState struct {
 	Dealer Hand
 }
 
+//consts to decide the turns
 const (
 	StatePlayerTurn State = iota
 	StateDealerTurn
 	StateHandOver
 )
 
+//clone is used to deepClone of two GameState structs.
 func clone(gs GameState) GameState {
 	ret := GameState{
 		Deck:   make([]deck.Card, len(gs.Deck)),
@@ -115,6 +130,7 @@ func clone(gs GameState) GameState {
 	return ret
 }
 
+// Current player returns which player's hand
 func (gs *GameState) CurrentPlayer() *Hand {
 	switch gs.State {
 	case StateDealerTurn:
@@ -126,12 +142,14 @@ func (gs *GameState) CurrentPlayer() *Hand {
 	}
 }
 
+// Shuffle creates a new 3 decks and shuffles them.
 func Shuffle(gs GameState) GameState {
 	ret := clone(gs)
 	ret.Deck = deck.New(deck.Deck(3), deck.Shuffle)
 	return ret
 }
 
+// Deal is used to deal the card to player and dealer.
 func Deal(gs GameState) GameState {
 	ret := clone(gs)
 	ret.Player = make(Hand, 0, 5)
@@ -149,6 +167,7 @@ func Deal(gs GameState) GameState {
 	return ret
 }
 
+// Hit is used to draw one more card from the deck for dealer or player
 func Hit(gs GameState) GameState {
 	ret := clone(gs)
 	hand := ret.CurrentPlayer()
@@ -161,12 +180,14 @@ func Hit(gs GameState) GameState {
 	return ret
 }
 
+// Stand just changes the playerState
 func Stand(gs GameState) GameState {
 	ret := clone(gs)
 	ret.State++
 	return ret
 }
 
+// End hand is used to print the score and winner or losser.
 func EndHand(gs GameState) GameState {
 	ret := clone(gs)
 	pScore, dScore := ret.Player.Score(), ret.Dealer.Score()
