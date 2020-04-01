@@ -103,3 +103,42 @@ func (h Hand) String() string {
 func (h Hand) dealerString() string {
 	return h[0].String() + ", ** Hidden **"
 }
+
+type State uint8
+
+type GameState struct {
+	Deck   []deck.Card
+	State  State
+	Player Hand
+	Dealer Hand
+}
+
+const (
+	StatePlayerTurn State = iota
+	StateDealerTurn
+	StateHandOver
+)
+
+func clone(gs GameState) GameState {
+	ret := GameState{
+		Deck:   make([]deck.Card, len(gs.Deck)),
+		Player: make(Hand, len(gs.Player)),
+		Dealer: make(Hand, len(gs.Dealer)),
+		State:  gs.State,
+	}
+	copy(ret.Deck, gs.Deck)
+	copy(ret.Player, gs.Player)
+	copy(ret.Dealer, gs.Dealer)
+	return ret
+}
+
+func (gs *GameState) CurrentPlayer() *Hand {
+	switch gs.State {
+	case StateDealerTurn:
+		return &gs.Dealer
+	case StatePlayerTurn:
+		return &gs.Player
+	default:
+		panic("No body knows whos turn is this.")
+	}
+}
