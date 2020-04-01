@@ -30,10 +30,40 @@ func main() {
 			player = append(player, card)
 		}
 	}
+	pScore, dScore := player.Score(), dealer.Score()
+	fmt.Println("-------- Final Hand ---------")
 	fmt.Println("Dealer : ", dealer)
+	fmt.Println("Dealer score : ", dScore)
 	fmt.Println("Player : ", player)
+	fmt.Println("Player score : ", pScore)
 }
 
+func (h Hand) Score() int {
+	minScore := h.minScore()
+	if minScore > 11 {
+		return minScore
+	}
+	for _, c := range h {
+		if c.Rank == deck.Ace {
+			return minScore + 10
+		}
+	}
+	return minScore
+}
+func (h Hand) minScore() int {
+	score := 0
+	for _, c := range h {
+		score += min(int(c.Rank), 10)
+	}
+	return score
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
 func draw(cards []deck.Card) (deck.Card, []deck.Card) {
 	card, cards := cards[0], cards[1:]
 	return card, cards
