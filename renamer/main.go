@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -42,6 +43,10 @@ func main() {
 		}
 		newPath := filepath.Join(dir, newFilename)
 		fmt.Printf("mv %s => %s\n", origPath, newPath)
+		err = os.Rename(origPath, newPath)
+		if err != nil {
+			panic(err)
+		}
 	}
 }
 
