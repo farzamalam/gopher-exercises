@@ -52,14 +52,36 @@ func (ai *basicAI) Play(hand []deck.Card, dealer deck.Card) blackjack.Move {
 	}
 	return blackjack.MoveStand
 }
+func (ai *basicAI) Results(hands [][]deck.Card, dealer []deck.Card) {
+	for _, card := range dealer {
+		ai.count(card)
+	}
+	for _, hand := range hands {
+		for _, card := range hand {
+			ai.count(card)
+		}
+	}
+}
+func (ai *basicAI) count(card deck.Card) {
+	score := blackjack.Score(card)
+	switch {
+	case score >= 10:
+		ai.score--
+	case score <= 6:
+		ai.score++
+	}
+	ai.seen++
+}
 
 func main() {
 	opts := blackjack.Options{
-		Decks:           2,
-		Hands:           1,
+		Decks:           4,
+		Hands:           999999,
 		BlackjackPayout: 1.5,
 	}
 	game := blackjack.New(opts)
-	winnings := game.Play(blackjack.HumanAI())
+	winnings := game.Play(&basicAI{
+		decks: 4,
+	})
 	fmt.Println(winnings)
 }
