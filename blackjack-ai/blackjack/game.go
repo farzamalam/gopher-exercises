@@ -24,6 +24,14 @@ type Game struct {
 	balance  int
 }
 
+func New() Game {
+	return Game{
+		state:    statePlayerTurn,
+		dealerAI: dealerAI{},
+		balance:  0,
+	}
+}
+
 func (g *Game) currentHand() *[]deck.Card {
 	switch g.state {
 	case statePlayerTurn:
@@ -104,12 +112,12 @@ func endHand(g *Game, ai AI) {
 		g.balance++
 	case pScore < dScore:
 		fmt.Println("You lost")
-		g.balance++
+		g.balance--
 	case pScore == dScore:
 		fmt.Println("Draw")
 	}
 	fmt.Println()
-	ai.Result([][]deck.Card{g.player}, g.dealer)
+	ai.Results([][]deck.Card{g.player}, g.dealer)
 	g.player = nil
 	g.dealer = nil
 }
