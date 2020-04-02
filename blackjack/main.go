@@ -187,7 +187,8 @@ func Stand(gs GameState) GameState {
 	return ret
 }
 
-// End hand is used to print the score and winner or losser.
+// End hand is used to print the score and winner or losser.ls
+
 func EndHand(gs GameState) GameState {
 	ret := clone(gs)
 	pScore, dScore := ret.Player.Score(), ret.Dealer.Score()
