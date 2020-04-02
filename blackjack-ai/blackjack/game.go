@@ -94,10 +94,7 @@ func deal(g *Game) {
 		card, g.deck = draw(g.deck)
 		g.dealer = append(g.dealer, card)
 	}
-	playerHand = []deck.Card{
-		{Rank: deck.Seven},
-		{Rank: deck.Seven},
-	}
+
 	g.player = []hand{
 		{
 			cards: playerHand,
