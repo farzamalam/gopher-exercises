@@ -10,12 +10,6 @@ import (
 )
 
 func main() {
-	// fileName := "birthday_001.txt"
-	// newName, err := match(fileName, 4)
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// fmt.Println(newName)
 
 	dir := "./sample"
 	files, err := ioutil.ReadDir(dir)
