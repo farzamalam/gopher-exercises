@@ -32,33 +32,20 @@ func main() {
 		fmt.Println(f)
 	}
 
-	for _, origFilename := range toRename {
-		//origPath := filepath.Join(dir, origFilename.path)
-		newFilename, err := match(origFilename.name)
+	for _, orig := range toRename {
+		var n file
+		var err error
+		n.name, err = match(orig.name)
 		if err != nil {
-			panic(err)
+			fmt.Println("Error while renaming ", n.name)
 		}
-		newPath := filepath.Join(dir, newFilename)
-		err = os.Rename(origFilename.path, newPath)
+		n.path = filepath.Join(dir, n.name)
+		err = os.Rename(orig.path, n.path)
 		if err != nil {
 			panic(err)
 		}
 	}
 
-	// fmt.Println("Rename : ", toRename)
-	// for _, origFilename := range toRename {
-	// 	origPath := filepath.Join(dir, origFilename)
-	// 	newFilename, err := match(origFilename, count)
-	// 	if err != nil {
-	// 		panic(err)
-	// 	}
-	// 	newPath := filepath.Join(dir, newFilename)
-	// 	fmt.Printf("mv %s => %s\n", origPath, newPath)
-	// 	err = os.Rename(origPath, newPath)
-	// 	if err != nil {
-	// 		panic(err)
-	// 	}
-	// }
 }
 
 func match(fileName string) (string, error) {
