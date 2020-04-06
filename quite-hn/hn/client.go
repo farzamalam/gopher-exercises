@@ -30,7 +30,6 @@ func (c *Client) defaultify() {
 // their site and kept going to the next page.
 //
 // TopItmes does not filter out job listings or anything else, as the type of
-// each item is unknown without further API calls.
 func (c *Client) TopItems() ([]int, error) {
 	c.defaultify()
 	resp, err := http.Get(fmt.Sprintf("%s/topstories.json", c.apiBase))
