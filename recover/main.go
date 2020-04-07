@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"runtime/debug"
 )
 
 func main() {
@@ -11,15 +12,21 @@ func main() {
 	mux.HandleFunc("/", hello)
 	mux.HandleFunc("/panic", panicDemo)
 	mux.HandleFunc("/panic-after", panicAfterDemo)
-	log.Fatal(http.ListenAndServe(":3000", recoverMW(mux)))
+	log.Fatal(http.ListenAndServe(":3000", recoverMW(mux, true)))
 }
 
-func recoverMW(app http.Handler) http.HandlerFunc {
+func recoverMW(app http.Handler, dev bool) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
 			err := recover()
 			if err != nil {
-				http.Error(w, "Something went wrong :(", http.StatusInternalServerError)
+				stack := debug.Stack()
+				log.Println(string(stack))
+				if !dev {
+					http.Error(w, "Something went wrong :(", http.StatusInternalServerError)
+					return
+				}
+				fmt.Fprintf(w, "<h1>panic : %v </h1><pre>%s</pre>", err, string(stack))
 			}
 		}()
 		app.ServeHTTP(w, r)
