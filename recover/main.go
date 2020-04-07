@@ -6,8 +6,10 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"net/url"
 	"os"
 	"runtime/debug"
+	"strings"
 
 	"github.com/alecthomas/chroma/quick"
 )
@@ -32,7 +34,7 @@ func recoverMW(app http.Handler, dev bool) http.HandlerFunc {
 					http.Error(w, "Something went wrong :(", http.StatusInternalServerError)
 					return
 				}
-				fmt.Fprintf(w, "<h1>panic : %v </h1><pre>%s</pre>", err, string(stack))
+				fmt.Fprintf(w, "<h1>panic : %v </h1><pre>%s</pre>", err, makeLinks(string(stack)))
 			}
 		}()
 		// nw := &responseWriter{
@@ -62,7 +64,33 @@ func sourceCodeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	//err = quick.Highlight(os.Stdout, "package main", "go", "html", "monokai")
-	err = quick.Highlight(w, b.String(), "go", "html", "monokai")
+	err = quick.Highlight(w, b.String(), "go", "html", "github")
+}
+
+func makeLinks(stack string) string {
+	lines := strings.Split(stack, "\n")
+	for li, line := range lines {
+		if len(line) == 0 || line[0] != '\t' {
+			continue
+		}
+		var file string
+		count := 0
+		for i, ch := range line {
+			if ch == ':' {
+				count++
+				if count == 2 {
+					file = line[1:i]
+					count = 0
+					break
+				}
+
+			}
+		}
+		v := url.Values{}
+		v.Set("path", file)
+		lines[li] = "\t <a href = \"/debug/?" + v.Encode() + "\">" + file + "</a>" + line[len(file)+1:]
+	}
+	return strings.Join(lines, "\n")
 }
 
 type responseWriter struct {
