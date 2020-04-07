@@ -2,14 +2,17 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"log"
 	"net/http"
+	"os"
 	"runtime/debug"
 )
 
 func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", hello)
+	mux.HandleFunc("/debug/", sourceCodeHandler)
 	mux.HandleFunc("/panic", panicDemo)
 	mux.HandleFunc("/panic-after", panicAfterDemo)
 	log.Fatal(http.ListenAndServe(":3000", recoverMW(mux, true)))
@@ -42,6 +45,15 @@ func recoverMW(app http.Handler, dev bool) http.HandlerFunc {
 // 	Write([]byte) (int, error)
 // 	WriteHeader(statusCode int)
 // }
+
+func sourceCodeHandler(w http.ResponseWriter, r *http.Request) {
+	path := r.FormValue("path")
+	file, err := os.Open(path)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+	io.Copy(w, file)
+}
 
 type responseWriter struct {
 	http.ResponseWriter
