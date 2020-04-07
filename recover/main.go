@@ -1,12 +1,15 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
 	"io"
 	"log"
 	"net/http"
 	"os"
 	"runtime/debug"
+
+	"github.com/alecthomas/chroma/quick"
 )
 
 func main() {
@@ -32,11 +35,11 @@ func recoverMW(app http.Handler, dev bool) http.HandlerFunc {
 				fmt.Fprintf(w, "<h1>panic : %v </h1><pre>%s</pre>", err, string(stack))
 			}
 		}()
-		nw := &responseWriter{
-			ResponseWriter: w,
-		}
-		app.ServeHTTP(nw, r)
-		nw.flush()
+		// nw := &responseWriter{
+		// 	ResponseWriter: w,
+		// }
+		app.ServeHTTP(w, r)
+		//nw.flush()
 	}
 }
 
@@ -45,14 +48,21 @@ func recoverMW(app http.Handler, dev bool) http.HandlerFunc {
 // 	Write([]byte) (int, error)
 // 	WriteHeader(statusCode int)
 // }
-
 func sourceCodeHandler(w http.ResponseWriter, r *http.Request) {
 	path := r.FormValue("path")
 	file, err := os.Open(path)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
-	io.Copy(w, file)
+	b := bytes.NewBuffer(nil)
+	_, err = io.Copy(b, file)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	//err = quick.Highlight(os.Stdout, "package main", "go", "html", "monokai")
+	err = quick.Highlight(w, b.String(), "go", "html", "monokai")
 }
 
 type responseWriter struct {
