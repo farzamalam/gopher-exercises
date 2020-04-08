@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"encoding/json"
-	"io"
+	"fmt"
 	"net/http"
 	"os"
 	"strings"
@@ -50,11 +50,32 @@ func main() {
 	ctx := context.Background()
 	var conf oauth2.Config
 	tclient := conf.Client(ctx, &token)
+	usernames, err := retweeters(tclient, "1221142432177221634")
+	fmt.Println(usernames)
+	fmt.Println("len : ", len(usernames))
+}
 
-	res2, err := tclient.Get("https://api.twitter.com/1.1/statuses/retweets/1247788770000162816.json")
+func retweeters(client *http.Client, tweetID string) ([]string, error) {
+	url := fmt.Sprintf("https://api.twitter.com/1.1/statuses/retweets/%s.json", tweetID)
+	res, err := client.Get(url)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
-	defer res2.Body.Close()
-	io.Copy(os.Stdout, res2.Body)
+	defer res.Body.Close()
+
+	var retweets []struct {
+		User struct {
+			ScreenName string `json:"screen_name"`
+		} `json:"user"`
+	}
+	d := json.NewDecoder(res.Body)
+	err = d.Decode(&retweets)
+	if err != nil {
+		return nil, err
+	}
+	username := make([]string, 0, len(retweets))
+	for _, retweet := range retweets {
+		username = append(username, retweet.User.ScreenName)
+	}
+	return username, nil
 }
