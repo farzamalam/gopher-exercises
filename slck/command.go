@@ -2,6 +2,7 @@ package main
 
 type ID int
 
+// commands name
 const (
 	REG ID = iota
 	JOIN
