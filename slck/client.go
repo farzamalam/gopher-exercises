@@ -142,3 +142,19 @@ func (c *client) msg(args []byte) error {
 	}
 	return nil
 }
+
+func (c *client) chns() {
+	c.outbound <- command{
+		sendor: c.username,
+		id:     CHNS,
+	}
+}
+func (c *client) usrs() {
+	c.outbound <- command{
+		sendor: c.username,
+		id:     USRS,
+	}
+}
+func (c *client) err(e error) {
+	c.conn.Write([]byte("ERR : " + e.Error() + "\n"))
+}
