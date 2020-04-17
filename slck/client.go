@@ -42,7 +42,6 @@ func (c *client) read() error {
 		}
 		c.handle(msg)
 	}
-	return nil
 }
 
 func (c *client) handle(message []byte) {
@@ -113,10 +112,9 @@ func (c *client) leave(args []byte) error {
 	return nil
 }
 
-// Bug in the code of fteem
 func (c *client) msg(args []byte) error {
 	args = bytes.TrimSpace(args)
-	if args[0] != '#' || args[0] != '@' {
+	if args[0] != '#' && args[0] != '@' {
 		return fmt.Errorf("Recipient must be a channel(#) or user(@)")
 	}
 	recipient := bytes.Split(args, []byte(" "))[0]
