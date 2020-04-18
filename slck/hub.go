@@ -96,7 +96,7 @@ func (h *hub) message(u, r string, m []byte) {
 				if _, ok := channel.clients[sender]; ok {
 					channel.broadcast(sender.username, m)
 				} else {
-					sender.conn.Write([]byte("Error : No such channel exists"))
+					sender.conn.Write([]byte("Error : No such channel exists\n"))
 				}
 
 			}
@@ -106,10 +106,10 @@ func (h *hub) message(u, r string, m []byte) {
 				msg = append(msg, '\n')
 				user.conn.Write(msg)
 			} else {
-				sender.conn.Write([]byte("Error : No such user is present"))
+				sender.conn.Write([]byte("Error : No such user is present\n"))
 			}
 		default:
-			sender.conn.Write([]byte("Error : Invalid MSG command"))
+			sender.conn.Write([]byte("Error : Invalid MSG command\n"))
 		}
 
 	}
@@ -118,7 +118,7 @@ func (h *hub) listChannels(u string) {
 	if client, ok := h.clients[u]; ok {
 		var names []string
 		if len(h.channels) == 0 {
-			client.conn.Write([]byte("Error : No such channel is found"))
+			client.conn.Write([]byte("Error : No such channel is found\n"))
 		}
 		for c := range h.channels {
 			names = append(names, "#"+c+" ")
