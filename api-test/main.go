@@ -23,6 +23,7 @@ func main() {
 	api.HandleFunc("", handler.Put).Methods(http.MethodPut)
 	api.HandleFunc("", handler.Delete).Methods(http.MethodDelete)
 	api.HandleFunc("", handler.NotFound)
+	api.HandleFunc("/user/{userID}/comment/{commentID}", handler.Params).Methods(http.MethodGet)
 	r.HandleFunc("/", home)
 	log.Println("Starting server at : 8080")
 	log.Fatal(http.ListenAndServe(":8080", r))
