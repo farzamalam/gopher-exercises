@@ -3,11 +3,11 @@ package main
 import (
 	"log"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
-type server struct{}
-
-func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func home(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-type", "application/json")
 
 	switch r.Method {
@@ -29,8 +29,15 @@ func (s *server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func get(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(`{"message":"GET called!"}`))
+}
+
 func main() {
-	s := &server{}
-	http.Handle("/", s)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	r := mux.NewRouter()
+	r.HandleFunc("/", get).Methods(http.MethodGet)
+	r.HandleFunc("/", home)
+	log.Fatal(http.ListenAndServe(":8080", r))
 }
