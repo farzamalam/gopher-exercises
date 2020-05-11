@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/farzamalam/gopher-exercises/api-test/handler"
 	"github.com/gorilla/mux"
 )
 
@@ -29,15 +30,13 @@ func home(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func get(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(`{"message":"GET called!"}`))
-}
-
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/", get).Methods(http.MethodGet)
-	r.HandleFunc("/", home)
+	r.HandleFunc("/", handler.Get).Methods(http.MethodGet)
+	r.HandleFunc("/", handler.Post).Methods(http.MethodPost)
+	r.HandleFunc("/", handler.Put).Methods(http.MethodPut)
+	r.HandleFunc("/", handler.Delete).Methods(http.MethodDelete)
+	r.HandleFunc("/", handler.NotFound)
+	log.Println("Starting server at : 8080")
 	log.Fatal(http.ListenAndServe(":8080", r))
 }
