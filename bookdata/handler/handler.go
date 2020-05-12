@@ -57,6 +57,49 @@ func SearchByISBN(w http.ResponseWriter, r *http.Request) {
 	util.Respond(w, http.StatusNotFound, resp)
 }
 
+func SearchByBookName(w http.ResponseWriter, r *http.Request) {
+	bookName, ok := mux.Vars(r)["book"]
+	if !ok {
+		data := util.Message(false, "Invalid book name")
+		util.Respond(w, http.StatusNotFound, data)
+		return
+	}
+	ratingOver, ratingBelow, err := getRatingParams(r)
+	limit, err := getLimitParam(r)
+	skip, err := getSkipParam(r)
+	if err != nil {
+		data := util.Message(false, "Invalid query params")
+		util.Respond(w, http.StatusNotFound, data)
+		return
+	}
+	data := books.SearchBook(bookName, ratingOver, ratingBelow, limit, skip)
+	resp := util.Message(true, "Success")
+	resp["data"] = data
+	util.Respond(w, http.StatusOK, resp)
+
+}
+
+func SearchByAuthor(w http.ResponseWriter, r *http.Request) {
+	author, ok := mux.Vars(r)["author"]
+	if !ok {
+		data := util.Message(false, "Invalid author name")
+		util.Respond(w, http.StatusNotAcceptable, data)
+		return
+	}
+	ratingOver, ratingBelow, err := getRatingParams(r)
+	limit, err := getLimitParam(r)
+	skip, err := getSkipParam(r)
+	if err != nil {
+		data := util.Message(false, "Invalid query param")
+		util.Respond(w, http.StatusNotAcceptable, data)
+		return
+	}
+	data := books.SearchAuthor(author, ratingOver, ratingBelow, limit, skip)
+	resp := util.Message(true, "Success")
+	resp["data"] = data
+	util.Respond(w, http.StatusOK, resp)
+}
+
 // getRatingParams is used to get the rating params from the optional query parameter.
 func getRatingParams(r *http.Request) (float64, float64, error) {
 	ratingOver := 0.0
