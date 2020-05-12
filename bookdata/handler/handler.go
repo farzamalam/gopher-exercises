@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"encoding/json"
 	"net/http"
 	"strconv"
 
@@ -98,6 +99,21 @@ func SearchByAuthor(w http.ResponseWriter, r *http.Request) {
 	resp := util.Message(true, "Success")
 	resp["data"] = data
 	util.Respond(w, http.StatusOK, resp)
+}
+
+func CreateBook(w http.ResponseWriter, r *http.Request) {
+	var book *model.Book
+	err := json.NewDecoder(r.Body).Decode(&book)
+	defer r.Body.Close()
+	if err != nil {
+		data := util.Message(false, "Invalid body")
+		util.Respond(w, http.StatusNotAcceptable, data)
+		return
+	}
+	ok := books.CreateBook(book)
+	resp := util.Message(ok, "New Book is created.")
+	resp["data"] = book
+	util.Respond(w, http.StatusCreated, resp)
 }
 
 // getRatingParams is used to get the rating params from the optional query parameter.

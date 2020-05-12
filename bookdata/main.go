@@ -25,8 +25,8 @@ func main() {
 	api.HandleFunc("/books/isbn/{isbn}", handler.Delete).Methods(http.MethodDelete)
 	api.HandleFunc("/books/book/{book}", handler.SearchByBookName).Methods(http.MethodGet)
 	api.HandleFunc("/books/author/{author}", handler.SearchByAuthor).Methods(http.MethodGet)
-	// api.HandleFunc("/books/book/{book}", handler.UpdateBook).Methods(http.MethodPut)
-	// api.HandleFunc("/book", handler.CreateBook).Methods(http.MethodPost)
+	api.HandleFunc("/books/isbn/{isbn}", handler.UpdateBook).Methods(http.MethodPut)
+	api.HandleFunc("/book", handler.CreateBook).Methods(http.MethodPost)
 
 	log.Println("Starting server at : 8080")
 	log.Fatal(http.ListenAndServe(":8080", r))
