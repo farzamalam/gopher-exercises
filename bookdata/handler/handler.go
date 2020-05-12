@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/farzamalam/gopher-exercises/bookdata/model"
 	"github.com/farzamalam/gopher-exercises/bookdata/util"
@@ -31,4 +32,56 @@ func SearchByISBN(w http.ResponseWriter, r *http.Request) {
 	}
 	resp := util.Message(false, "Not found")
 	util.Respond(w, http.StatusNotFound, resp)
+}
+
+// getRatingParams is used to get the rating params from the optional query parameter.
+func getRatingParams(r *http.Request) (float64, float64, error) {
+	ratingOver := 0.0
+	ratingBelow := 5.0
+	query := r.URL.Query()
+	ro := query.Get("ratingOver")
+	if ro != "" {
+		val, err := strconv.ParseFloat(ro, 64)
+		if err != nil {
+			return ratingOver, ratingBelow, err
+		}
+		ratingOver = val
+	}
+	rb := query.Get("ratingBelow")
+	if rb != "" {
+		val, err := strconv.ParseFloat(rb, 64)
+		if err != nil {
+			return ratingOver, ratingBelow, err
+		}
+		ratingBelow = val
+	}
+	return ratingOver, ratingBelow, nil
+}
+
+func getLimitParam(r *http.Request) (int, error) {
+	limit := 0
+	query := r.URL.Query()
+	l := query.Get("limit")
+	if l != "" {
+		val, err := strconv.Atoi(l)
+		if err != nil {
+			return limit, err
+		}
+		limit = val
+	}
+	return limit, nil
+}
+
+func getSkipParam(r *http.Request) (int, error) {
+	skip := 0
+	query := r.URL.Query()
+	s := query.Get("skip")
+	if s != "" {
+		val, err := strconv.Atoi(s)
+		if err != nil {
+			return skip, err
+		}
+		skip = val
+	}
+	return skip, nil
 }
