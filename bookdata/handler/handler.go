@@ -16,6 +16,29 @@ func init() {
 	books.Initialize()
 
 }
+
+func Home(w http.ResponseWriter, r *http.Request) {
+	data := util.Message(true, "Welcome home!")
+	util.Respond(w, http.StatusOK, data)
+}
+
+func Delete(w http.ResponseWriter, r *http.Request) {
+	isbn, ok := mux.Vars(r)["isbn"]
+	if !ok {
+		data := util.Message(false, "ISBN is not found in the url.")
+		util.Respond(w, http.StatusNotFound, data)
+		return
+	}
+	ok = books.DeleteBook(isbn)
+	if !ok {
+		data := util.Message(false, "No record is found.")
+		util.Respond(w, http.StatusNotFound, data)
+		return
+	}
+	data := util.Message(true, "Record has been deleted.")
+	util.Respond(w, http.StatusAccepted, data)
+}
+
 func SearchByISBN(w http.ResponseWriter, r *http.Request) {
 	isbn, ok := mux.Vars(r)["isbn"]
 	if !ok {
