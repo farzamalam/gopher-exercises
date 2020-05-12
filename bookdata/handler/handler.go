@@ -116,6 +116,32 @@ func CreateBook(w http.ResponseWriter, r *http.Request) {
 	util.Respond(w, http.StatusCreated, resp)
 }
 
+func UpdateBook(w http.ResponseWriter, r *http.Request) {
+	isbn, ok := mux.Vars(r)["isbn"]
+	if !ok {
+		data := util.Message(false, "Invalid ISBN")
+		util.Respond(w, http.StatusNotAcceptable, data)
+		return
+	}
+	var book *model.Book
+	err := json.NewDecoder(r.Body).Decode(&book)
+	defer r.Body.Close()
+	if err != nil {
+		data := util.Message(false, "Invalid body")
+		util.Respond(w, http.StatusNotAcceptable, data)
+		return
+	}
+	ok = books.UpdateBook(isbn, book)
+	if !ok {
+		data := util.Message(false, "Book not found")
+		util.Respond(w, http.StatusNotFound, data)
+		return
+	}
+	resp := util.Message(true, "Record has been updated.")
+	resp["data"] = book
+	util.Respond(w, http.StatusAccepted, resp)
+}
+
 // getRatingParams is used to get the rating params from the optional query parameter.
 func getRatingParams(r *http.Request) (float64, float64, error) {
 	ratingOver := 0.0
