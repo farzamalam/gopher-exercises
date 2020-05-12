@@ -34,6 +34,7 @@ func (b *Books) Initialize() {
 	}
 	b.Store = loadData(file)
 }
+
 func (b *Books) SearchAuthor(author string, ratingOver, ratingBelow float64, limit, skip int) *[]*Book {
 	res := Filter(b.Store, func(bk *Book) bool {
 		return strings.Contains(strings.ToLower(bk.Authors), strings.ToLower(author)) && bk.AverageRatings >= ratingOver && bk.AverageRatings <= ratingBelow
@@ -44,6 +45,7 @@ func (b *Books) SearchAuthor(author string, ratingOver, ratingBelow float64, lim
 	data := (*res)[skip:limit]
 	return &data
 }
+
 func (b *Books) SearchBook(bookName string, ratingOver, ratingBelow float64, limit, skip int) *[]*Book {
 	res := Filter(b.Store, func(bk *Book) bool {
 		return strings.Contains(strings.ToLower(bk.Title), strings.ToLower(bookName)) && bk.AverageRatings >= ratingOver && bk.AverageRatings <= ratingBelow
