@@ -10,8 +10,9 @@ import (
 type BookStore interface {
 	Initialize()
 	PrintBooks()
-	//SearchAuthor(author string, ratingOver, ratingBelow float64, limit, skip int) *[]*Book
-	//SearchBook(bookName string, ratingOver, ratingBelow float64, limit, skip int) *[]*Book
+	Len() int
+	SearchAuthor(author string, ratingOver, ratingBelow float64, limit, skip int) *[]*Book
+	SearchBook(bookName string, ratingOver, ratingBelow float64, limit, skip int) *[]*Book
 	SearchISBN(isbn string) *Book
 	CreateBook(book *Book) bool
 	DeleteBook(isbn string) bool
@@ -32,6 +33,26 @@ func (b *Books) Initialize() {
 		log.Fatalf("Error while opening the file %s\n", fileName)
 	}
 	b.Store = loadData(file)
+}
+func (b *Books) SearchAuthor(author string, ratingOver, ratingBelow float64, limit, skip int) *[]*Book {
+	res := Filter(b.Store, func(bk *Book) bool {
+		return strings.Contains(strings.ToLower(bk.Authors), strings.ToLower(author)) && bk.AverageRatings >= ratingOver && bk.AverageRatings <= ratingBelow
+	})
+	if limit == 0 || limit > len(*res) {
+		limit = len(*res)
+	}
+	data := (*res)[skip:limit]
+	return &data
+}
+func (b *Books) SearchBook(bookName string, ratingOver, ratingBelow float64, limit, skip int) *[]*Book {
+	res := Filter(b.Store, func(bk *Book) bool {
+		return strings.Contains(strings.ToLower(bk.Title), strings.ToLower(bookName)) && bk.AverageRatings >= ratingOver && bk.AverageRatings <= ratingBelow
+	})
+	if limit == 0 || limit > len(*res) {
+		limit = len(*res)
+	}
+	data := (*res)[skip:limit]
+	return &data
 }
 
 func (b *Books) UpdateBook(isbn string, book *Book) bool {
@@ -66,11 +87,14 @@ func (b *Books) DeleteBook(isbn string) bool {
 	return true
 }
 
-func (b Books) PrintBooks() {
-	books := b.Store
-	for _, book := range *books {
+func (b *Books) PrintBooks() {
+	for _, book := range *b.Store {
 		fmt.Println(*book)
 	}
+}
+
+func (b *Books) Len() int {
+	return len(*b.Store)
 }
 
 func (b *Books) SearchISBN(isbn string) *Book {

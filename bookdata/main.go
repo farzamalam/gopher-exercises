@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/farzamalam/gopher-exercises/bookdata/model"
 )
 
@@ -22,4 +24,5 @@ func init() {
 
 func main() {
 	books.PrintBooks()
+	fmt.Println("length : ", books.Len())
 }
