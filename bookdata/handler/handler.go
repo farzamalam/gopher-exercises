@@ -2,6 +2,7 @@ package handler
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -19,11 +20,13 @@ func init() {
 }
 
 func Home(w http.ResponseWriter, r *http.Request) {
+	log.Println(r.URL)
 	data := util.Message(true, "Welcome home!")
 	util.Respond(w, http.StatusOK, data)
 }
 
 func Delete(w http.ResponseWriter, r *http.Request) {
+	log.Println(r.URL)
 	isbn, ok := mux.Vars(r)["isbn"]
 	if !ok {
 		data := util.Message(false, "ISBN is not found in the url.")
@@ -41,6 +44,7 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 }
 
 func SearchByISBN(w http.ResponseWriter, r *http.Request) {
+	log.Println(r.URL)
 	isbn, ok := mux.Vars(r)["isbn"]
 	if !ok {
 		data := util.Message(false, "ISBN not found in the url.")
@@ -59,6 +63,7 @@ func SearchByISBN(w http.ResponseWriter, r *http.Request) {
 }
 
 func SearchByBookName(w http.ResponseWriter, r *http.Request) {
+	log.Println(r.URL)
 	bookName, ok := mux.Vars(r)["book"]
 	if !ok {
 		data := util.Message(false, "Invalid book name")
@@ -81,6 +86,7 @@ func SearchByBookName(w http.ResponseWriter, r *http.Request) {
 }
 
 func SearchByAuthor(w http.ResponseWriter, r *http.Request) {
+	log.Println(r.URL)
 	author, ok := mux.Vars(r)["author"]
 	if !ok {
 		data := util.Message(false, "Invalid author name")
@@ -102,6 +108,7 @@ func SearchByAuthor(w http.ResponseWriter, r *http.Request) {
 }
 
 func CreateBook(w http.ResponseWriter, r *http.Request) {
+	log.Println(r.URL)
 	var book *model.Book
 	err := json.NewDecoder(r.Body).Decode(&book)
 	defer r.Body.Close()
@@ -117,6 +124,7 @@ func CreateBook(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateBook(w http.ResponseWriter, r *http.Request) {
+	log.Println(r.URL)
 	isbn, ok := mux.Vars(r)["isbn"]
 	if !ok {
 		data := util.Message(false, "Invalid ISBN")
