@@ -7,7 +7,7 @@ import (
 
 	"github.com/gorilla/mux"
 )
-
+// lets see if it works.
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", home)
