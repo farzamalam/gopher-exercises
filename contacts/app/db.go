@@ -18,4 +18,5 @@ func init() {
 	pssqlInfo := fmt.Sprintf("host = %s port = %d user = %s password = %s sslmode = disable ", host, port, user, password)
 	log.Println("pssqlInfo : ", pssqlInfo)
 	db, err := sql.Open()
+	defer db.Close()
 }

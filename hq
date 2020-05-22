@@ -1,0 +1,727 @@
+[33mcommit f6b8f6a1d3713fd2e1e1a6acf5aeee1c82196a0d[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Thu May 21 19:23:08 2020 +0000
+
+    logging statement of connection string
+
+[33mcommit 6c1b0b6b11288f2d516451365da38016ef0d944d[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Mon May 18 21:42:36 2020 +0200
+
+    lets see if it works
+
+[33mcommit 36b91a045180bedbe30627711f483092c01af339[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sun May 17 23:08:28 2020 +0530
+
+    updated the port
+
+[33mcommit 50278aed96366478d304f6cf8936198b4bdcc473[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sat May 16 23:50:57 2020 +0530
+
+    Added default http handler
+
+[33mcommit 3030f6d3f4f5fffac4c6873f01e41debc41f247f[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Fri May 15 23:44:47 2020 +0530
+
+    Updated contact.go and gitignore
+
+[33mcommit e1fddd4d60831570c311f020a2ba894088b714ba[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Thu May 14 10:12:31 2020 +0530
+
+    Created contact type and started working on the db integration
+
+[33mcommit b11fb35e89070b014f6b16a5d3385eec2978c8e7[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Thu May 14 08:07:31 2020 +0530
+
+    Added utiltity funcs for message and respond
+
+[33mcommit 689b370c33676609ad4cf101ab75139909dc1fc6[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Wed May 13 15:39:26 2020 +0530
+
+    Added logging and deployed on server
+
+[33mcommit fc30db31a3ad02857de6939d2c7410ccf50b912a[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Tue May 12 21:16:50 2020 +0530
+
+    Implemented update book handler
+
+[33mcommit ef1e919411ebcfdcedcdffbcc40c334c8b2ceca3[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Tue May 12 21:07:07 2020 +0530
+
+    Added create book
+
+[33mcommit 7e72fd8e699b972f7fc32e0a0fa72356620bfda3[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Tue May 12 20:34:51 2020 +0530
+
+    Implemented handler for search by book name and by author
+
+[33mcommit eaf3b866f1269d2d107bb347ccf88c3f47fa4301[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Tue May 12 20:08:57 2020 +0530
+
+    Implemented Delete operation
+
+[33mcommit 8b39903d276c815840c5ee360f9423e3c5be2dd0[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Tue May 12 19:36:35 2020 +0530
+
+    Wrote funcs get the optional query param from url
+
+[33mcommit 80b302f768fcbb418a97cabb268a1dd493b9ea33[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Tue May 12 19:23:50 2020 +0530
+
+    Implemented handler for SearchByISBN and tested it on postman
+
+[33mcommit c07b4a8fc8a46a6d3392436ee59d0dc5f82d3e04[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Tue May 12 18:01:38 2020 +0530
+
+    Wrote search methods on books interface
+
+[33mcommit ec707469601e5e491fe8d787854e628879393284[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Tue May 12 17:38:03 2020 +0530
+
+    Wrote update, delete and searchISBN method
+
+[33mcommit eda8a0831ede1d10cdeb1ba76c1a1890dde333af[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Mon May 11 19:10:36 2020 +0530
+
+    Initial commit, Loaded csv into memory
+
+[33mcommit 931a5250f7ce26d45da7415c518934fafd16a9f9[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Mon May 11 17:37:27 2020 +0530
+
+    Implemented Params handler to get the query and path parameter from url
+
+[33mcommit 2b365083a8f1c5a1809c383877ebea012480b043[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Mon May 11 16:53:18 2020 +0530
+
+    Added a subrouter
+
+[33mcommit 625852c065acaee6b6b89d7985567f3fecf5f660[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Mon May 11 16:47:40 2020 +0530
+
+    Added gorilla/mux routing and added handler.go file to have all the handler functions
+
+[33mcommit 2298d911a52132a18c531d97aa5e9a3fa2c9c147[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Mon May 11 14:13:27 2020 +0530
+
+    Implemented a seperate GET method handler
+
+[33mcommit 9b55d213e925ea926cb3deb9fba0c595cd68fcb8[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Mon May 11 13:58:10 2020 +0530
+
+    Added a handlers for basic http methods in ServeHTTP
+
+[33mcommit 114d840110ebe66fd1f525494c7c1ca588f862de[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Mon May 11 12:55:11 2020 +0530
+
+    Initial commit, wrote a ServerHTTP method and print hello world
+
+[33mcommit 2d01d4a7cef30e962bdceea5796d3489421d4a49[m
+Merge: a3f5fee a7c690b
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sun May 10 23:05:50 2020 +0530
+
+    Resolved a merge confict
+
+[33mcommit a3f5fee7d674da7fb4d0277c5e107e09ab9f25c4[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sun May 10 23:04:03 2020 +0530
+
+    Implemented slck protocol
+
+[33mcommit a7c690b89df0c0f865afc74ab64c6c57aa3897b0[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sun Apr 19 10:57:45 2020 +0530
+
+    Wrote Comments
+
+[33mcommit e5ca95368dbbc34a606f029b4b65268aa6132093[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sat Apr 18 13:28:17 2020 +0530
+
+    Added new line to make alignment and tested with tcp using raw, telnet in putty
+
+[33mcommit a1c073e82c43f75cdb65ae6c6be2b7871269a79f[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Fri Apr 17 12:58:46 2020 +0530
+
+    Debugged client.go
+
+[33mcommit 1e2355b688c0bde02f6a1cc893d1512533976199[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Fri Apr 17 12:11:03 2020 +0530
+
+    Added go mod
+
+[33mcommit 7bd169bc2397671991996129dc8898167e5a7e84[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Fri Apr 17 12:10:31 2020 +0530
+
+    Added main
+
+[33mcommit 593a913e8e06508515b3d52fbc19990e9475c685[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Fri Apr 17 09:35:08 2020 +0530
+
+    Implemented hub
+
+[33mcommit 087efa5e0f30abd75660866f0cdc2c345619eba1[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Fri Apr 17 08:33:07 2020 +0530
+
+    Added reg, join, leave and msg methods for client
+
+[33mcommit c6fd20657781ffa5ccd9c9e26abbc4c01f5997c9[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Wed Apr 15 22:06:13 2020 +0530
+
+    Implementing the client
+
+[33mcommit 79c9080d0a67037f22c26bdacb0a4796b51341b1[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Wed Apr 15 21:50:26 2020 +0530
+
+    Implemented a slck channel
+
+[33mcommit 4a730f0876085d8fb870f94ddea9cfe9096fb89b[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Wed Apr 15 21:43:28 2020 +0530
+
+    Initialized slck repo, and created command type and constants Op
+
+[33mcommit 734cbea5c6b9afd866185a2cdff8441fc2e1e0ff[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Wed Apr 8 16:16:26 2020 +0530
+
+    Got retweeters from the api
+
+[33mcommit a5ddb655d4ca5bac87cf61480289d3a66cabf2a5[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Wed Apr 8 13:40:08 2020 +0530
+
+    Implemented authentication and sent bearer token to get the response from id
+
+[33mcommit fd5e2164d474f321583b9d797f57f155cc27f061[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Wed Apr 8 12:50:16 2020 +0530
+
+    Wrote code to read and print the keys from keys.json
+
+[33mcommit 9ae607da6abdafa157934e11fbc8162677c126c9[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Wed Apr 8 12:32:57 2020 +0530
+
+    Added git ignore
+
+[33mcommit 46967ca2efd0c1c1b8d2b74f3d9779ed26a77c20[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Wed Apr 8 12:32:27 2020 +0530
+
+    Initialized twitter-cli app
+
+[33mcommit 8ef20d2c3c36178040015c60d01376d089cc7084[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Tue Apr 7 13:24:37 2020 +0530
+
+    implemented recover and rendered code in browser
+
+[33mcommit 569df839650775d97644d0def299769f6b0f8437[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Tue Apr 7 12:42:27 2020 +0530
+
+    added links to line of code of stack trace and highlighted it
+
+[33mcommit f915f158872d3cb06092645e5f76ba891576e045[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Tue Apr 7 12:09:33 2020 +0530
+
+    Wrote to quick.Highlight the code and render in the browser
+
+[33mcommit a3f7dd62e0aa21c19c65d38cde3e3d1f11097418[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Tue Apr 7 10:52:54 2020 +0530
+
+    Rendered souce file in the browser
+
+[33mcommit f8fa49ea17ff16d6cd3ef8aaf38dc64085b62f86[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Tue Apr 7 09:57:31 2020 +0530
+
+    Implemented custom responseWriter and flush func
+
+[33mcommit 25a94e8bdbdb77089ed5a51cee66ac1943492caf[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Tue Apr 7 09:30:55 2020 +0530
+
+    Added stack trace in for both logs and browser for dev and only log for other environments
+
+[33mcommit 8c2190e303b34d10988bb5c6340fc76ce58a3fb6[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Tue Apr 7 09:16:59 2020 +0530
+
+    Initialized recover repo and created a simple server and recover middleware
+
+[33mcommit 82a02f6c052d8850f39cafb65b18a2ebaa9f72a8[m
+Author: Farzam Alam <farzamcse@gmail.com>
+Date:   Mon Apr 6 23:51:45 2020 +0530
+
+    Update index.gohtml
+
+[33mcommit 4999ebe0186de9dce788129f646dbaa114db7fbc[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Tue Apr 7 00:50:13 2020 +0530
+
+    Wrote comments
+
+[33mcommit 6f10be7bbf741568ff594d394c824bff52e4a815[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Tue Apr 7 00:47:00 2020 +0530
+
+    Implemented complete quitenn
+
+[33mcommit 2f8155b31336d9898e5fc0ee9e4531aff11560db[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sun Apr 5 22:00:28 2020 +0530
+
+    Added cache, still prone to race condition
+
+[33mcommit a5e25cd24d7b9f868eb0d6bd863809fe7b986154[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sun Apr 5 21:07:49 2020 +0530
+
+    Added logic of only 30(numStories)
+
+[33mcommit 43ff172422ed955eca9104ea1a4590d790301a00[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sun Apr 5 20:43:19 2020 +0530
+
+    Added concurrency in the application
+
+[33mcommit 067f6fc59558b6fb8e07a46fa3a93e5dfc38bbdd[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sun Apr 5 19:31:26 2020 +0530
+
+    Added go routine in a little incorrect way'
+
+[33mcommit 53ced8932df3b872fb145d29fe4f8bf07a331136[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sun Apr 5 18:32:48 2020 +0530
+
+    Initialized quite-hn, clone the web app code from github.
+
+[33mcommit cdf6202f1d91ac770f169a0214489e9109f651a5[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sun Apr 5 12:50:50 2020 +0530
+
+    Implemented regex and finished renamer
+
+[33mcommit 9b91a9425359fa49805412a384e605984b198dd9[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sun Apr 5 12:32:05 2020 +0530
+
+    Implemented counting files
+
+[33mcommit d52a669816dcaf504e4008d485c05497953dea28[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sun Apr 5 11:53:43 2020 +0530
+
+    Again stash other changes
+
+[33mcommit 7120cc93c5f4ddbfe678387de3d2b61a03730b4f[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sun Apr 5 11:43:13 2020 +0530
+
+    implemented filewalf with a little bug
+
+[33mcommit 0f76b04d5fd8d28c009a368cd37652d14edb2454[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Fri Apr 3 23:20:34 2020 +0530
+
+    Removed commented code from the main
+
+[33mcommit 127dde0ad1eab0f4482ac804485e66b1bfb9a0f6[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Thu Apr 2 23:54:21 2020 +0530
+
+    changed the file names and now stashing the file name changes
+
+[33mcommit fa91913414fca70bb39bc7242d03fba63a7ef47e[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Thu Apr 2 23:51:47 2020 +0530
+
+    matched pattern amoung the files and set a count
+
+[33mcommit 7ac757eff0cde739ad04bb3baf73d9fbe3267da1[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Thu Apr 2 23:36:37 2020 +0530
+
+    Added sample folders and files
+
+[33mcommit 8c17075e1bc6f1bc71f86869e584f76d9f67937c[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Thu Apr 2 21:10:07 2020 +0530
+
+    Initialized a repo renamer, and wrote a match func
+
+[33mcommit 313864e2edc6ca0b20f1e7284c93216a0767e51f[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Thu Apr 2 16:48:51 2020 +0530
+
+    Implemented basic ai
+
+[33mcommit 7cd1b1e6698a2d22bb6696887fa65ce519d50deb[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Thu Apr 2 16:43:21 2020 +0530
+
+    Implemented Counting in main.go
+
+[33mcommit ab86ba48d9e5687a3b2f9735ef7a2e5c929c864e[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Thu Apr 2 16:30:08 2020 +0530
+
+    Fixed bugs
+
+[33mcommit 7366f051284f0051f447b4fd4c71a3457559a121[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Thu Apr 2 13:04:11 2020 +0530
+
+    Added betting and game opts
+
+[33mcommit d91dbb5928c5f1e74c91f24a0db9cd531f25b080[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Thu Apr 2 12:36:23 2020 +0530
+
+    Added main () to call the ai and run the game
+
+[33mcommit 684ffd04db632986638717a57a3c5e795050e37d[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Thu Apr 2 12:23:55 2020 +0530
+
+    Initialized blackjack-ai and created lib
+
+[33mcommit d01d96cda50503e057ac1c9a8a4287e1a17d4389[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Wed Apr 1 21:55:56 2020 +0530
+
+    Added comments to all funcs and types
+
+[33mcommit 1403aba64597918818da61e13a6a84823c4e51ad[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Wed Apr 1 21:48:06 2020 +0530
+
+    Implemented game state
+
+[33mcommit 8c18c53b664610edebf39d19608c4e919317c6e6[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Wed Apr 1 21:04:53 2020 +0530
+
+    Wrote clone func and CurrentPlayer() to get current game state
+
+[33mcommit 3afe70efe874c29241eb5f26c771bc897fc74a02[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Wed Apr 1 20:19:13 2020 +0530
+
+    Added logic of draw cards for dealer
+
+[33mcommit 7ae4a6f0077b05c4282b422b46825d848acf0b4f[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Wed Apr 1 20:06:21 2020 +0530
+
+    Implemented counting of scores for dealer and player
+
+[33mcommit c906114e89dcefbf4829f482fc54ecbf9d758a30[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Wed Apr 1 19:36:52 2020 +0530
+
+    Added a dealer and player, and can hit and stand as per player input
+
+[33mcommit d10cb82bc4b48300da3ed1d39e87d17fe69dbc7a[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Wed Apr 1 19:23:52 2020 +0530
+
+    wrote draw func and String()
+
+[33mcommit 62fb8c80fb0c632e439ab6035f3cf3a68a35c95a[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Tue Mar 31 23:57:01 2020 +0530
+
+    Initialized blackjack
+
+[33mcommit c24f669c44c18d3108435c2820e3ab48a8feba0a[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Tue Mar 31 13:19:17 2020 +0530
+
+    Tested shuffle and wrote comments
+
+[33mcommit 935384c541a7ce460aa9ac233eccec9560df362d[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Tue Mar 31 12:45:58 2020 +0530
+
+    Added functional option for n Deck, and wrote test for it
+
+[33mcommit 5d43138549ebae1552f51a6004c915ecb71540b3[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Tue Mar 31 11:13:00 2020 +0530
+
+    Added func to shuffle the cards and add jokers, and wrote test for it
+
+[33mcommit ab687f0fb9c10b866ef06cee70fdc5196d6449c9[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Tue Mar 31 10:48:15 2020 +0530
+
+    Implemented sort with default and custom functional options and wrote test for it
+
+[33mcommit 0e2e2936ff0fe8033e87dfccb13a66e3e916558a[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Tue Mar 31 00:01:12 2020 +0530
+
+    Added a New() to generate a slice of cards, and wrote TestNew()
+
+[33mcommit a2b17d0b4137d2d69688891584677ccd8d833a7e[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Mon Mar 30 23:48:17 2020 +0530
+
+    Added a stringer func
+
+[33mcommit ced82b80c351a978fdb639136faa779e7a10a76b[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Mon Mar 30 23:45:26 2020 +0530
+
+    Added a package deck, and wrote cards_test to check the striger method
+
+[33mcommit 9144a0be501938e86c1456a466b61fd45f6a57ab[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Mon Mar 30 21:12:43 2020 +0530
+
+    Implemented go-phone-number-normalizer
+
+[33mcommit f68a32902d844ad354f0a61dfe5b855941190b5f[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Mon Mar 30 20:40:17 2020 +0530
+
+    Wrote a func to search the number in the table
+
+[33mcommit 737785da51e80c78c351e9ba8a98b90e162835bc[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Mon Mar 30 00:06:46 2020 +0530
+
+    Added getAll from table
+
+[33mcommit e8f376fe28c2a0cd08c9d1afa878527768a3e53b[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sun Mar 29 23:59:33 2020 +0530
+
+    Implemented get
+
+[33mcommit 9bbeb12af1fa3615dbd3b9b84a5406832ac35577[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sun Mar 29 23:34:14 2020 +0530
+
+    Implemented insert func, and added test case values in our table
+
+[33mcommit c67ee4508202132a5a33ebe1bfc39349a2dd82fe[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sun Mar 29 23:12:14 2020 +0530
+
+    Created a database and a table in postgres
+
+[33mcommit 86ff82d6bd9b79b6be741e4b4b9586aecb29e622[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sun Mar 29 16:18:08 2020 +0530
+
+    Initialized go-phone-number-normalizer and wrote test case to check the normalization
+
+[33mcommit b7991f4d4fdbf2b761a6bfd75e951d3b18986777[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sun Mar 29 14:22:13 2020 +0530
+
+    Implemented task do and wrote comments
+
+[33mcommit bf2321ea336d86c4a67fccaef65960aa68d6f01c[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sun Mar 29 13:28:13 2020 +0530
+
+    Finished add and list command
+
+[33mcommit d085e0f3a249a30bbbbc6674cd8f4b6907297da2[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sun Mar 29 13:08:44 2020 +0530
+
+    Wrote funcs for CreateTask() and AllTasks() to write and read task bucket
+
+[33mcommit 16787c243eeab5226e60384948dc90663cfdf4be[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sun Mar 29 12:34:40 2020 +0530
+
+    Created task.db in home dir, it will be our app db
+
+[33mcommit 37c8c8793bac4c93314768b9c80a82ae060dea82[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sun Mar 29 12:22:19 2020 +0530
+
+    Implemented a connection to boltdb
+
+[33mcommit dc626e2304b3d0324e1a793913244d134ff1d5c8[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sat Mar 28 21:40:31 2020 +0530
+
+    Implemented add and do cmd line tool for reading data
+
+[33mcommit 80e2b00f9675c595eca10a01b00b125219310d39[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sat Mar 28 21:29:26 2020 +0530
+
+    Initialized new project task, created basic shell
+
+[33mcommit 5b3d1e8fd459e4fd9cad9abe1087a187f15bc1d8[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sat Mar 28 12:44:09 2020 +0530
+
+    Implemented hacker-rank problems in gophercises.
+
+[33mcommit fcb5a693f34219733ecfa217802d0d9f8e02ab3c[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sat Mar 28 11:12:22 2020 +0530
+
+    Wrote comment on each funcs and variable, and finished this excersise
+
+[33mcommit e92428d9825606e91a3a5da08bd4882688430dc3[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sat Mar 28 10:59:11 2020 +0530
+
+    Implemented sitemap builder and created a sitemap.xml
+
+[33mcommit fd46c9a4643c1260167f5b3b9a4230f92bdc54c8[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Fri Mar 27 18:23:25 2020 +0530
+
+    Broke main() into multiple funcs and added filter to show only results of same host
+
+[33mcommit a172e94c8ef6da1cfe43c18c8959d2fc696cef83[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Fri Mar 27 13:29:58 2020 +0530
+
+    Initialized go-sitemap-builder and created a url flag
+
+[33mcommit cfdbb4e23ef388229cde372b0439f157388b0a05[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Fri Mar 27 11:22:24 2020 +0530
+
+    Implemented go-link-parser, and wrote comments for all the funcs and types
+
+[33mcommit a91ee80b3b6243a565317aff78fbccdcc879e95e[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Fri Mar 27 11:02:42 2020 +0530
+
+    implemented the txt parsing
+
+[33mcommit 5aa318751a2cc7d979a06d261521552ecb84e10f[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Fri Mar 27 10:48:34 2020 +0530
+
+    Implemented parsing of Links Href
+
+[33mcommit fb80833de7fafc8f35f3d9f8f5c3480e230b25ee[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Thu Mar 26 18:00:24 2020 +0530
+
+    Commented all the exported funcs and types, and finished Ex-2
+
+[33mcommit e8d387e322bf1b772c180b5f63b42df4b1435703[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Thu Mar 26 17:33:16 2020 +0530
+
+    Implemented custom function options
+
+[33mcommit 2f7081859578aad1dc4cd438d5f0e0895e5dae04[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Thu Mar 26 13:16:22 2020 +0530
+
+    Implemented navigation on click of option in web app
+
+[33mcommit d223e4a45b2e32df1125ae2950720b2148c6fb31[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Thu Mar 26 12:54:12 2020 +0530
+
+    Implemented basic html template
+
+[33mcommit ff258f5ddb67875d800fcdefd551bd3959b9743f[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Wed Mar 25 21:08:28 2020 +0530
+
+    Started working on EX-3, go-choose-your-own-adventure
+
+[33mcommit bd8e73c471a0e06e81bf293a6909cf808fb7941e[m
+Merge: 0c90b33 02a4bd1
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Wed Mar 25 18:29:03 2020 +0530
+
+    Merge branch 'master' of https://github.com/FarzamAlam/gopher-exercises
+
+[33mcommit 0c90b3326eff26b4e368f243ec9af1a53063d939[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Wed Mar 25 18:28:38 2020 +0530
+
+    Implemented YAML and Map handler for shorturl
+
+[33mcommit c0d22738bd35184a5164192e1f8b727dc161445d[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Wed Mar 25 13:48:07 2020 +0530
+
+    Created a new submodule go-shorturl, this is Excercise #2 of gopherexcercie
+
+[33mcommit 02a4bd1f4566dcf2e3a8270d52cbe2d89b20555e[m
+Author: Farzam Alam <farzamcse@gmail.com>
+Date:   Fri Mar 20 23:40:17 2020 +0530
+
+    Added more rows.
+
+[33mcommit a4ccd107caf2a5e267a8b65e7c961e0db5609d0d[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Wed Mar 18 09:14:29 2020 +0530
+
+    Created two seperate channels for time limit and scanf.
+
+[33mcommit 19e445ed89e4d9966043a67f39002fd116548529[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Wed Mar 18 09:09:59 2020 +0530
+
+    Added concurrency to stop the quiz after the expiry of time limit
+
+[33mcommit 3d179798029398ae936bd1fed4e42b344a960f1e[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Wed Mar 18 08:24:37 2020 +0530
+
+    Implemented the first part, now able to run the quiz by reading the csv and displaying the result.
+
+[33mcommit 9c14edcb29d2d377f9385ae206b1a453f9fc845f[m
+Author: FarzamAlam <farzamcse@gmail.com>
+Date:   Sun Mar 15 23:25:34 2020 +0530
+
+    Initial commit, initialized go-quiz
+
+[33mcommit a98d3c40adb4ed57e124e06d920c8fb743b929f4[m
+Author: Farzam Alam <farzamcse@gmail.com>
+Date:   Sun Mar 15 23:17:44 2020 +0530
+
+    Initial commit
