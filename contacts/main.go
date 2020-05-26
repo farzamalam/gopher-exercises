@@ -7,13 +7,14 @@ import (
 
 	"github.com/gorilla/mux"
 )
+
 // lets see if it works.
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", home)
-	port := "8000"
-
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+	port := "8080"
+	log.Println("Starting app : ", port)
+	log.Fatal(http.ListenAndServe(":"+port, r))
 }
 
 func home(w http.ResponseWriter, r *http.Request) {
