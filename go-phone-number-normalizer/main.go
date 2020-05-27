@@ -29,10 +29,6 @@ func must(err error) {
 
 func main() {
 	pssqlInfo := fmt.Sprintf("host = %s port = %d user = %s password = %s sslmode = disable ", host, port, user, password)
-	// db, err := sql.Open("postgres", pssqlInfo)
-	// must(err)
-	// must(resetDb(db, dbName))
-	// defer db.Close()
 
 	pssqlInfo = fmt.Sprintf("%s dbname = %s", pssqlInfo, dbName)
 	db, err := sql.Open("postgres", pssqlInfo)
@@ -40,9 +36,6 @@ func main() {
 	defer db.Close()
 	must(createPhoneNumberTable(db))
 
-	// id, err := insertPhoneNumber(db, "1234567890")
-	// must(err)
-	// fmt.Println("id = ", id)
 	id := 3
 	phone, err := getPhone(db, id)
 	must(err)
