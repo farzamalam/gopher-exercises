@@ -1,9 +1,12 @@
 FROM golang:1.13
 
-WORKDIR /go/src/app
+
+WORKDIR /go/src/visits
+COPY ./go.mod .
+RUN go get -d -v ./...
 
 COPY . .
 
 RUN go install .
 
-CMD ["app"]
+CMD ["visits"]
