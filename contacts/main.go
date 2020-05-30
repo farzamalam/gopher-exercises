@@ -4,19 +4,14 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-
-	"github.com/gorilla/mux"
 )
 
-// lets see if it works.
 func main() {
-	r := mux.NewRouter()
-	r.HandleFunc("/", home)
-	port := "8080"
-	log.Println("Starting app : ", port)
-	log.Fatal(http.ListenAndServe(":"+port, r))
+	http.HandleFunc("/", home)
+	log.Println("Starting server : 8080")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
 func home(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Welcome Home")
+	fmt.Fprintf(w, "Welcome Home!")
 }
