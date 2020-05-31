@@ -1,3 +1,4 @@
+// Package utils contains handy utils functions to build json message and return json response.
 package utils
 
 import (

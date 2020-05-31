@@ -10,6 +10,7 @@ func main() {
 	http.HandleFunc("/", home)
 	log.Println("Starting server : 8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
+	defer GetDB().Close()
 }
 
 func home(w http.ResponseWriter, r *http.Request) {
