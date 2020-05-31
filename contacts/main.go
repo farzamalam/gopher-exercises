@@ -12,8 +12,10 @@ func main() {
 	http.HandleFunc("/", home)
 	log.Println("Starting server : 8080")
 	defer models.GetDB().Close()
-	contact := models.GetContact(1)
-	fmt.Println(*contact)
+	contacts := models.GetContacts(1)
+	fmt.Println(*contacts[0])
+	fmt.Println(*contacts[1])
+
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 

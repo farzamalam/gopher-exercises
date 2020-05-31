@@ -13,6 +13,7 @@ import (
 
 var db *sql.DB
 
+// init is used to initialize the .env file and open a connection to db.
 func init() {
 	e := godotenv.Load()
 	if e != nil {
@@ -32,15 +33,6 @@ func init() {
 		log.Fatal("Error while connecting to Database : ", err)
 	}
 
-}
-
-func GetContact(id int) *Contact {
-	contact := Contact{}
-	err := GetDB().QueryRow("Select contacts_id, name, phone, user_id, created_at from contacts where contacts_id = ? ", id).Scan(&contact.ContactsID, &contact.Name, &contact.Phone, &contact.UserID, &contact.CreatedAt)
-	if err != nil {
-		log.Fatal("Error whlie Getting Contact : ", err)
-	}
-	return &contact
 }
 
 // GetDB returns the DB type that is used to close the connection from main.
