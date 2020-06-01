@@ -29,13 +29,13 @@ func GetContact(id int) *Contact {
 	return &contact
 }
 
-func GetContacts(id int) []*Contact, error {
+func GetContacts(id int) ([]*Contact, error) {
 	var contacts []*Contact
 	res, err := GetDB().Query("Select contacts_id, name, phone, user_id, created_at from contacts where user_id = ? ", id)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			log.Println("No Record found for id ", id)
-			return nil,nil
+			return nil, nil
 		}
 		log.Println("Error while Getting Contacts : ", err)
 		return nil, err
@@ -45,7 +45,7 @@ func GetContacts(id int) []*Contact, error {
 		err = res.Scan(&contact.ContactsID, &contact.Name, &contact.Phone, &contact.UserID, &contact.CreatedAt)
 		if err != nil {
 			log.Println("Error while Calling the service : ", err)
-			nil, err
+			return nil, err
 		}
 		contacts = append(contacts, &contact)
 	}
