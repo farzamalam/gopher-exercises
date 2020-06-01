@@ -17,7 +17,7 @@ func main() {
 	r.HandleFunc("/", home).Methods("GET")
 	r.HandleFunc("/api/v1/contacts/new", handlers.CreateContact).Methods("POST")
 	r.HandleFunc("/api/v1/contacts/{userID}", handlers.GetContacts).Methods("GET")
-
+	r.HandleFunc("/api/v1/user/new", handlers.CreateAccount).Methods("POST")
 	defer models.GetDB().Close()
 	log.Println("Starting server : 8080")
 	log.Fatal(http.ListenAndServe(":8080", r))

@@ -2,8 +2,12 @@ package models
 
 import (
 	"database/sql"
+	"fmt"
+	"log"
 	"os"
 	"strings"
+
+	"golang.org/x/crypto/bcrypt"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/farzamalam/gopher-exercises/contacts/utils"
@@ -24,7 +28,7 @@ type Account struct {
 }
 
 // Validate incoming user details.
-func (account *Account) Validate(map[string]interface{}, bool) {
+func (account *Account) Validate() (map[string]interface{}, bool) {
 	if !strings.Contains(account.Email, "@") {
 		return utils.Message(false, "Email address is required"), false
 	}
@@ -32,13 +36,18 @@ func (account *Account) Validate(map[string]interface{}, bool) {
 		return utils.Message(false, "Valid Password is required"), false
 	}
 	// Email must be unique
-	_, err := GetDB().Query("Select accounts_id from accounts where email = ?", account.Email)
-	if err != sql.ErrNoRows {
-		return utils.Message(false, "Connection Error. Please retry"), false
-	}
+	row, err := GetDB().Query("Select accounts_id from accounts where email = ?", account.Email)
+	fmt.Println("account.Email : ", account.Email)
+	var id int
+	row.Scan(&id)
+	fmt.Println("row : ", id)
 	if err == nil {
 		return utils.Message(false, "Email address is already present."), false
 	}
+	if err != sql.ErrNoRows {
+		return utils.Message(false, "Connection Error. Please retry"), false
+	}
+
 	return utils.Message(false, "Requirement Passed."), true
 }
 
@@ -58,9 +67,10 @@ func (account *Account) Create() map[string]interface{} {
 	if err != nil {
 		return utils.Message(false, "Error while Inserting the account")
 	}
-	sql = "select * from accounts where accounts_id= (select max(accounts_id) from accounts)"
-	err = GetDB().Query(sql).Scan(&account.AccountsID, &account.Name, &account.Email, &account.Password, &account.Token, &account.CreatedAt)
+	sql = "select accounts_id, name, email,password, created_at  from accounts where accounts_id= (select max(accounts_id) from accounts)"
+	err = GetDB().QueryRow(sql).Scan(&account.AccountsID, &account.Name, &account.Email, &account.Password, &account.CreatedAt)
 	if err != nil {
+		log.Println("Error while getting the Account details after the insert : ", err)
 		return utils.Message(false, "Error while getting the Account details after insert.")
 	}
 
