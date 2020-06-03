@@ -1,8 +1,6 @@
 package models
 
 import (
-	"database/sql"
-	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -35,18 +33,18 @@ func (account *Account) Validate() (map[string]interface{}, bool) {
 	if len(account.Password) < 6 {
 		return utils.Message(false, "Valid Password is required"), false
 	}
-	// Email must be unique
-	row, err := GetDB().Query("Select accounts_id from accounts where email = ?", account.Email)
-	fmt.Println("account.Email : ", account.Email)
-	var id int
-	row.Scan(&id)
-	fmt.Println("row : ", id)
-	if err == nil {
-		return utils.Message(false, "Email address is already present."), false
-	}
-	if err != sql.ErrNoRows {
-		return utils.Message(false, "Connection Error. Please retry"), false
-	}
+	// // Email must be unique
+	// row, err := GetDB().Query("Select accounts_id from accounts where email = ?", account.Email)
+	// fmt.Println("account.Email : ", account.Email)
+	// var id int
+	// row.Scan(&id)
+	// fmt.Println("row : ", id)
+	// if err == nil {
+	// 	return utils.Message(false, "Email address is already present."), false
+	// }
+	// if err != sql.ErrNoRows {
+	// 	return utils.Message(false, "Connection Error. Please retry"), false
+	// }
 
 	return utils.Message(false, "Requirement Passed."), true
 }
