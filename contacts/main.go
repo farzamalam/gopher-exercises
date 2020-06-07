@@ -19,6 +19,7 @@ func main() {
 	r.HandleFunc("/api/v1/contacts/{userID}", handlers.GetContacts).Methods(http.MethodGet)
 	r.HandleFunc("/api/v1/user/new", handlers.CreateAccount).Methods(http.MethodPost)
 	r.HandleFunc("/api/v1/user/{accountsID}", handlers.GetAccount).Methods(http.MethodGet)
+	r.HandleFunc("/api/v1/user/login", handlers.Authenticate).Methods(http.MethodPost)
 	defer models.GetDB().Close()
 	port := "8080"
 	log.Println("Starting server : ", port)

@@ -39,3 +39,15 @@ func GetAccount(w http.ResponseWriter, r *http.Request) {
 	resp["data"] = account
 	utils.Respond(w, http.StatusOK, resp)
 }
+
+func Authenticate(w http.ResponseWriter, r *http.Request) {
+	account := &models.Account{}
+	err := json.NewDecoder(r.Body).Decode(account)
+	defer r.Body.Close()
+	if err != nil {
+		utils.Respond(w, http.StatusBadRequest, utils.Message(false, "Invalid request"))
+		return
+	}
+	resp := models.Login(account.Email, account.Password)
+	utils.Respond(w, http.StatusAccepted, resp)
+}
