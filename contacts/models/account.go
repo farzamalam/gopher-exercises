@@ -1,14 +1,14 @@
 package models
 
 import (
+	"database/sql"
 	"log"
 	"os"
 	"strings"
 
-	"golang.org/x/crypto/bcrypt"
-
 	"github.com/dgrijalva/jwt-go"
 	"github.com/farzamalam/gopher-exercises/contacts/utils"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type Token struct {
@@ -81,4 +81,19 @@ func (account *Account) Create() map[string]interface{} {
 	resp := utils.Message(true, "Account has been created.")
 	resp["data"] = account
 	return resp
+}
+
+func GetUser(id int) *Account {
+	account := Account{}
+	s := "Select accounts_id, email, name, created_at from accounts where accounts_id = ?"
+	err := GetDB().QueryRow(s, id).Scan(&account.AccountsID, &account.Email, &account.Name, &account.CreatedAt)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			log.Println("No account for id : ", id)
+			return nil
+		}
+		log.Println("Error while GetUser : ", err)
+		return nil
+	}
+	return &account
 }

@@ -18,9 +18,11 @@ func main() {
 	r.HandleFunc("/api/v1/contacts/new", handlers.CreateContact).Methods(http.MethodPost)
 	r.HandleFunc("/api/v1/contacts/{userID}", handlers.GetContacts).Methods(http.MethodGet)
 	r.HandleFunc("/api/v1/user/new", handlers.CreateAccount).Methods(http.MethodPost)
+	r.HandleFunc("/api/v1/user/{accountsID}", handlers.GetAccount).Methods(http.MethodGet)
 	defer models.GetDB().Close()
-	log.Println("Starting server : 8080")
-	log.Fatal(http.ListenAndServe(":8080", r))
+	port := "8080"
+	log.Println("Starting server : ", port)
+	log.Fatal(http.ListenAndServe(":"+port, r))
 }
 
 func home(w http.ResponseWriter, r *http.Request) {

@@ -3,6 +3,7 @@ package app
 import (
 	"context"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -14,11 +15,12 @@ import (
 
 func JwtAuthentication(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		notAuth := []string{"/api/v1/user/new", "/api/v1/user/login"} // List of end points	that doesn' require auth.
-		requestPath := r.URL.Path                                     // Current Request path
+		notAuth := []string{"/api/v1/user/new", "/api/v1/user/login", "/api/v1/user"} // List of end points	that doesn' require auth.
+		log.Println(r.URL.Path)
+		requestPath := r.URL.Path // Current Request path
 		// Check if the request doesn't need authentication, serve the request
 		for _, value := range notAuth {
-			if value == requestPath {
+			if strings.Contains(requestPath, value) {
 				next.ServeHTTP(w, r)
 				return
 			}
