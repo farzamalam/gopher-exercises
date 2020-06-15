@@ -6,7 +6,9 @@ import (
 )
 
 func main() {
-	ln, err := net.Listen("tcp", ":8081")
+	port :="8081"
+	fmt.Println("Server started listening on ",port)
+	ln, err := net.Listen("tcp", ":"+port)
 	if err != nil {
 		log.Printf("%v", err)
 	}
