@@ -22,8 +22,8 @@ func main() {
 
 	// Create a Queue
 	q, err := ch.QueueDeclare(
-		"hello",
-		false,
+		"task_queue",
+		true,
 		false,
 		false,
 		false,
