@@ -8,11 +8,16 @@ import (
 
 func main() {
 	h := "localhost"
-	p := 8081
-	conn, err := net.Dial("tcp", fmt.Sprintf("%s:%d", h, p))
-	if err != nil {
-		log.Fatalf("PORT %d is CLOSED : %v\n", p, err)
+	fp := 8075
+	tp := 8085
+	for p := fp; p <= tp; p++ {
+		conn, err := net.Dial("tcp", fmt.Sprintf("%s:%d", h, p))
+		if err != nil {
+			log.Printf("%d - CLOSED : %v\n", p, err)
+			continue
+		}
+		conn.Close()
+		log.Printf("%d - OPEN\n", p)
 	}
-	conn.Close()
-	log.Printf("PORT %d is OPEN\n", p)
+
 }
