@@ -11,13 +11,16 @@ func main() {
 	fp := 8075
 	tp := 8085
 	for p := fp; p <= tp; p++ {
-		conn, err := net.Dial("tcp", fmt.Sprintf("%s:%d", h, p))
-		if err != nil {
-			log.Printf("%d - CLOSED : %v\n", p, err)
-			continue
-		}
-		conn.Close()
-		log.Printf("%d - OPEN\n", p)
-	}
+		go func(p int) {
+			conn, err := net.Dial("tcp", fmt.Sprintf("%s:%d", h, p))
+			if err != nil {
+				log.Printf("%d - CLOSED : %v\n", p, err)
+				return
+			}
+			conn.Close()
+			log.Printf("%d - OPEN\n", p)
+		}(p)
 
+	}
+	log.Printf("DONE!\n")
 }
