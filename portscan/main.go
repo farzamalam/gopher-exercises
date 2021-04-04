@@ -7,9 +7,9 @@ import (
 	"log"
 	"net"
 	"runtime"
+	"sort"
 	"strconv"
 	"strings"
-	"sync"
 )
 
 var host string
@@ -24,65 +24,77 @@ func init() {
 
 func main() {
 	flag.Parse()
-
-	fp, err := strconv.Atoi(fromPort)
+	portsToScan, err := parsePortsToScan(ports)
 	if err != nil {
-		log.Fatalf("Error while parsing 'from' port: %v", err)
-	}
-	tp, err := strconv.Atoi(toPort)
-	if err != nil {
-		log.Fatalf("Error while parsing 'to' port : %v", err)
+		log.Fatalf("Unable to parse ports flag : %v", err)
 	}
 
-	if fp > tp {
-		log.Fatalf("Invalid values of 'from' and 'to' port.")
+	portsChan := make(chan int, numWorkers)
+	resultsChan := make(chan int)
+
+	for i := 0; i < cap(portsChan); i++ {
+		go worker(host, portsChan, resultsChan)
 	}
 
-	var wg sync.WaitGroup
+	go func() {
+		for _, p := range portsToScan {
+			portsChan <- p
+		}
+	}()
 
-	wg.Add(tp - fp + 1)
-	for p := fp; p <= tp; p++ {
-		go func(p int) {
-			defer wg.Done()
-			conn, err := net.Dial("tcp", fmt.Sprintf("%s:%d", host, p))
-			if err != nil {
-				log.Printf("%d Closed %s\n", p, err)
-				return
-			}
-			conn.Close()
-			log.Printf("%d Open\n", p)
-		}(p)
+	var openPorts []int
+	for i := 0; i < len(portsToScan); i++ {
+		if p := <-resultsChan; p != -1 {
+			openPorts = append(openPorts, p)
+		}
 	}
-	log.Println("Waiting")
-	wg.Wait()
-	log.Println("Done.")
+	close(portsChan)
+	close(resultsChan)
 
+	sort.Ints(openPorts)
+	for _, p := range openPorts {
+		log.Printf("%d Open \n", p)
+	}
 }
 
-func portsToScan(portsFlag string) ([]int, error) {
+func parsePortsToScan(portsFlag string) ([]int, error) {
 	p, err := strconv.Atoi(portsFlag)
 	if err == nil {
 		return []int{p}, nil
 	}
 	ports := strings.Split(portsFlag, "-")
 	if len(ports) != 2 {
-		return nil, errors.New("unable to determine port(s) to scan.")
+		return nil, errors.New("unable to determine port(s) to scan")
 	}
 
 	fp, err := strconv.Atoi(ports[0])
 	if err != nil {
-		return nil, fmt.Errorf("Falied to convert %s to a valid port number.", ports[0])
+		return nil, fmt.Errorf("falied to convert %s to a valid port number", ports[0])
 	}
 	tp, err := strconv.Atoi(ports[1])
 	if err != nil {
-		return nil, fmt.Errorf("Failed to convert %s to a valid port number.", ports[1])
+		return nil, fmt.Errorf("failed to convert %s to a valid port number", ports[1])
 	}
 	if tp < 0 || fp < 0 {
-		return nil, fmt.Errorf("Port number must be greater than 0.")
+		return nil, fmt.Errorf("port number must be greater than 0")
 	}
 	var res []int
 	for p := fp; p <= tp; p++ {
 		res = append(res, p)
 	}
 	return res, nil
+}
+
+func worker(host string, portsChan <-chan int, resultsChan chan<- int) {
+	for p := range portsChan {
+		address := fmt.Sprintf("%s:%d", host, p)
+		conn, err := net.Dial("tcp", address)
+		if err != nil {
+			fmt.Printf("%d Closed %s\n", p, err)
+			resultsChan <- -1
+			continue
+		}
+		conn.Close()
+		resultsChan <- p
+	}
 }
