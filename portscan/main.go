@@ -53,7 +53,7 @@ func main() {
 
 	sort.Ints(openPorts)
 	for _, p := range openPorts {
-		log.Printf("%d Open \n", p)
+		log.Printf("%d OPEN \n", p)
 	}
 }
 
@@ -90,7 +90,7 @@ func worker(host string, portsChan <-chan int, resultsChan chan<- int) {
 		address := fmt.Sprintf("%s:%d", host, p)
 		conn, err := net.Dial("tcp", address)
 		if err != nil {
-			fmt.Printf("%d Closed %s\n", p, err)
+			fmt.Printf("%d CLOSED %s\n", p, err)
 			resultsChan <- -1
 			continue
 		}
