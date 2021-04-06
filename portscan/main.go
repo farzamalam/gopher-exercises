@@ -11,6 +11,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 
 	"golang.org/x/sync/semaphore"
 )
@@ -18,11 +19,13 @@ import (
 var host string
 var ports string
 var numWorkers int
+var timeout int
 
 func init() {
 	flag.StringVar(&host, "host", "localhost", "host to scan.")
 	flag.StringVar(&ports, "ports", "80", "Port(s) ex 80, 443, 8080-9080.")
 	flag.IntVar(&numWorkers, "workers", runtime.NumCPU(), "Number of workers. Defaults to 8.")
+	flag.IntVar(&timeout, "timeout", 5, "Timeout in seconds.(Default is 5 sec)")
 }
 
 func main() {
@@ -33,7 +36,8 @@ func main() {
 	}
 
 	sem := semaphore.NewWeighted(int64(numWorkers))
-	ctx := context.TODO()
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(timeout)*time.Second)
+	defer cancel()
 	var openPorts []int
 
 	for _, port := range portsToScan {
