@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"errors"
 	"flag"
 	"fmt"
@@ -10,6 +11,8 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+
+	"golang.org/x/sync/semaphore"
 )
 
 var host string
@@ -29,27 +32,28 @@ func main() {
 		log.Fatalf("Unable to parse ports flag : %v", err)
 	}
 
-	portsChan := make(chan int, numWorkers)
-	resultsChan := make(chan int)
-
-	for i := 0; i < cap(portsChan); i++ {
-		go worker(host, portsChan, resultsChan)
-	}
-
-	go func() {
-		for _, p := range portsToScan {
-			portsChan <- p
-		}
-	}()
-
+	sem := semaphore.NewWeighted(int64(numWorkers))
+	ctx := context.TODO()
 	var openPorts []int
-	for i := 0; i < len(portsToScan); i++ {
-		if p := <-resultsChan; p != -1 {
-			openPorts = append(openPorts, p)
+
+	for _, port := range portsToScan {
+		if err := sem.Acquire(ctx, 1); err != nil {
+			log.Printf("Failed to acquire semaphore: %v\n", err)
+			break
 		}
+		go func(port int) {
+			defer sem.Release(1)
+			p := scan(host, port)
+			if p > 0 {
+				openPorts = append(openPorts, p)
+			}
+		}(port)
 	}
-	close(portsChan)
-	close(resultsChan)
+
+	err = sem.Acquire(ctx, int64(numWorkers))
+	if err != nil {
+		fmt.Printf("Failed to acquire semaphore: %v\n", err)
+	}
 
 	sort.Ints(openPorts)
 	for _, p := range openPorts {
@@ -85,16 +89,12 @@ func parsePortsToScan(portsFlag string) ([]int, error) {
 	return res, nil
 }
 
-func worker(host string, portsChan <-chan int, resultsChan chan<- int) {
-	for p := range portsChan {
-		address := fmt.Sprintf("%s:%d", host, p)
-		conn, err := net.Dial("tcp", address)
-		if err != nil {
-			fmt.Printf("%d CLOSED %s\n", p, err)
-			resultsChan <- -1
-			continue
-		}
-		conn.Close()
-		resultsChan <- p
+func scan(host string, port int) int {
+	conn, err := net.Dial("tcp", fmt.Sprintf("%s:%d", host, port))
+	if err != nil {
+		log.Printf("%d CLOSED\n", port)
+		return -1
 	}
+	conn.Close()
+	return port
 }
