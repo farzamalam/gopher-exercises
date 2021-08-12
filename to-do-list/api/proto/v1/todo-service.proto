@@ -1,6 +1,6 @@
 syntax = "proto3";
 package v1;
-
+option go_package = "github.com/frzam/to-do-list";
 import "google/protobuf/timestamp.proto";
 
 // tDO is the Task we have to do
@@ -18,7 +18,7 @@ message ToDo{
 message CreateRequest{
     // api versioning
     string api = 1;
-    TODO toDo = 2;
+    ToDo toDo = 2;
 }
 
 message CreateResponse{
