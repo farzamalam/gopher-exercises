@@ -1,6 +1,6 @@
 ## We specify the base image we need for our
 ## go application
-FROM golang:1.16.0-alpine3.9
+FROM golang:1.16-alpine3.14
 ## We create an /app directory within our
 ## image that will hold our application source
 ## files
