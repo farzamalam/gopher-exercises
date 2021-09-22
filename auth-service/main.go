@@ -1,10 +1,15 @@
 package main
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
+	"os"
+
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/joho/godotenv"
 )
 
 type BasicAuthResponse struct {
@@ -22,10 +27,29 @@ type CreateAuthResponse struct {
 	User    string `json:"user"`
 }
 
+var db *sql.DB
+
+func init() {
+	_ = godotenv.Load()
+	name := os.Getenv("db_name")
+	host := os.Getenv("db_host")
+	port := os.Getenv("db_port")
+	user := os.Getenv("db_user")
+	pass := os.Getenv("db_pass")
+
+	var err error
+	db, err = sql.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", user, pass, host, port, name))
+	if err != nil {
+		log.Fatalf("error in connecting to database: %v", err)
+	}
+}
+
 func main() {
 
+	defer db.Close()
 	http.HandleFunc("/api/v1/verify", verify)
 	http.HandleFunc("/api/v1/create", create)
+
 	port := "8080"
 	log.Printf("Starting server at : %s\n", port)
 	log.Fatal(http.ListenAndServe(":"+port, nil))
@@ -85,8 +109,24 @@ func create(w http.ResponseWriter, r *http.Request) {
 }
 
 func verifyInDB(username, password string) bool {
-	return false
+	res := db.QueryRow("select password from auth_table where username = ?", username)
+	var pass string
+	err := res.Scan(&pass)
+	if err != nil {
+		log.Printf("error while verifying: %v\n", err)
+		return false
+	}
+	if pass != password {
+		return false
+	}
+	return true
 }
 func createInDB(username, password string) error {
+	sql := fmt.Sprintf("insert into auth_table(username, password) values('%s', '%s')", username, password)
+	_, err := db.Exec(sql)
+	if err != nil {
+		log.Printf("error while create user: %v\n", err)
+		return err
+	}
 	return nil
 }
