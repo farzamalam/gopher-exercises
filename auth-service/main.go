@@ -76,6 +76,7 @@ func verify(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, string(resp))
 		return
 	}
+	w.WriteHeader(http.StatusUnauthorized)
 
 }
 
